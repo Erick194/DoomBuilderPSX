@@ -10,7 +10,7 @@ This release includes the following configurations:
 
 The last two points, have disabled the stretching of textures and can render the sky for the floors.
 
-The configuration for PsyDoom was taken from the following Commit by @BodbDearg: [Provide a GZDoom builder config to expose PsyDoom extensions to PSX Doom](https://github.com/BodbDearg/PsyDoom/commit/3084a9e4d9b2d7c1ac5d224fba1949674efb12d4#diff-fb52bb6c0dba0a4f8180fda0a718ecb454e7c0a17ce35f4f87abf63668f6f6e7)
+The configuration for PsyDoom was taken from the following Commit by @BodbDearg : [Provide a GZDoom builder config to expose PsyDoom extensions to PSX Doom](https://github.com/BodbDearg/PsyDoom/commit/3084a9e4d9b2d7c1ac5d224fba1949674efb12d4#diff-fb52bb6c0dba0a4f8180fda0a718ecb454e7c0a17ce35f4f87abf63668f6f6e7)
 
 **System requirements:**
 - 2.4 GHz CPU or faster (multi-core recommended)
