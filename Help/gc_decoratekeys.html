@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>DECORATE keys</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" media="screen" title="Default" />
+</head>
+<body>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+  <param name="keyword" value="Configurations">
+  <param name="keyword" value="Game Configurations">
+  <param name="keyword" value="DECORATE">
+</object>
+<div id="title">
+  <h1>DECORATE keys</h1>
+</div>
+<div id="contents">
+  <p>GZDoom Builder includes a DECORATE parser used to obtain relevant information (such as editor number, Radius, Height, Scale, and so on) from custom actors.<br />
+  <br /><br />
+  <span class="big">Global definitions (GZDB only):</span>
+  <br />
+   Additional information can be conveyed with keys in the form of special comments inserted in the global DECORATE block:<br /><br />
+  <strong>//$GZDB_SKIP</strong><br />
+  DECORATE parser will stop parsing a file after encountering this comment. This can be used to speedup the parsing process by skipping files, which don't contain placeable actor definitions.<br />
+  <br /><br />
+  <span class="big">Actor definitions:</span>
+  <br />Additional information can be conveyed with keys in the form of special comments inserted within an actor's declaration block:<br />
+  
+    <br />
+    <strong>//$Angled</strong> - <span class="red">GZDB only</span>.<br />
+    <strong>//$NotAngled</strong> - <span class="red">GZDB only</span>.<br />
+    Specifies whether the direction matters (angled) or not. Things that are not angled are represented without a direction arrow.<br />
+    <br />
+    <strong>//$Category &lt;category&gt;</strong><br />
+    Specifies in which category (Monsters, Weapons, etc.) it should be sorted. By default, a custom actor not identified in a configuration file will be put in the Decorate category.<br />
+    GZDoom Builder supports hierarchical subgroups, using the backslash separator. For example, <strong>//$Category "Decorations/Tech"</strong> will put the actor within the "Tech" subgroup of the "Decorations" group.<br />
+    <br />
+    <strong>//$Sprite &lt;sprite&gt;</strong><br />
+    Specifies which sprite to use to represent the actor in the editor. By default, a custom actor not identified in a configuration file will use the first suitable sprite it finds in the actor definition, trying first the states in the sequence Idle, See, Inactive, Spawn, and if all these fail, the first defined state. This key is therefore especially useful for stateless actor definitions. Keep in mind that this sprite name must match an image in the wad (i.e., if the sprite in your wad is named JUNKA0D0, you need to put JUNKA0D0, JUNKA0 won't work).<br />
+    <br />
+    <strong>//$Title &lt;title&gt;</strong><br />
+    Specifies which name to give to the actor. By default, a custom actor not identified in a configuration file will use the Tag property, and if not present, will default to the class name.<br />
+    <br />
+    <strong>//$IgnoreRenderstyle</strong> - <span class="red">GZDB only</span>.<br />
+    "RenderStyle" DECORATE property will be ignored by the editor. Helpful when you want to see the sprite of an invisible actor in Visual mode.<br />
+    <br />
+    <strong><a name="argtitle" id="argtitle"></a>//$ArgN &lt;name&gt;</strong> - <span class="red">GZDB only</span>.<br />
+    Allows to override default argument names for this actor.<br />
+    <br />
+    <strong><a name="argdefault" id="argdefault"></a>//$ArgNDefault &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+    Allows to set the default value for this argument. This property must be used in conjunction with the &quot;<strong>//$ArgN</strong>&quot; property.<br />
+    <br />
+    <strong><a name="argtooltip" id="argtooltip"></a>//$ArgNTooltip &lt;text&gt;</strong> - <span class="red">GZDB only</span>.<br />
+    Allows to specify a tooltip text displayed for this argument. Newline character (&quot;\n&quot;) can be used to format the  text. This property must be used in conjunction with the &quot;<strong>//$ArgN</strong>&quot; property.<br />
+    Argument tooltips can be also set for <a href="gc_argumentsettings.html#argtooltip">things and linedefs</a> in a Game Configuration.<br />
+    <br />
+    <strong><a name="argtype" id="argtype"></a>//$ArgNType &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+    Allows to specify an <a href="gc_argumentsettings.html#argtype">argument type</a> for this argument. This property must be used in conjunction with the &quot;<strong>//$ArgN</strong>&quot; property.<br />
+    <br />
+	
+	<strong><a name="argrenderstyle" id="argrenderstyle"></a>//$ArgNRenderStyle &lt;string&gt;</strong> - <span class="red">GZDB only</span>.<br />
+    Allows to specify a rendering shape to display the value of this argument. Supported values are:<br />
+   <ul>
+   	<li>&quot;<strong>Rectangle</strong>&quot;. The argument value is used as rectangle size.</li>
+   	<li>&quot;<strong>Circle</strong>&quot;. The argument value is used as circle radius.</li>
+   </ul> 
+   Rendering shapes can be toggled using &quot;<strong><a href="gzdb/features/general/rendering_toolbar.html">Toggle Event Lines</a></strong>&quot; action/menu button.<br />
+   This property must be used in conjunction with the &quot;<strong>//$ArgN</strong>&quot; property.<br />
+  	<br />
+  	<strong><a name="argrendercolor" id="argrendercolor"></a>//$ArgNRenderColor &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to specify a color used by rendering shape. Supported values are hex color (like &quot;<strong>FF0000</strong>&quot;), HTML-formatted hex color (like &quot;<strong>#F00</strong>&quot; or &quot;<strong>#FF0000</strong>&quot;) or color name (like &quot;<strong>Red</strong>&quot;).<br />
+  	By default rendering shapes will use Event line <a href="w_preferences.html">editor color</a>.<br />
+  	This property must be used in conjunction with &quot;<strong>//$ArgN</strong>&quot; and &quot;<strong>//$ArgNRenderStyle</strong>&quot; properties.<br />
+  	<br />
+  	
+  	<strong><a name="argminrange" id="argminrange"></a>//$ArgNMinRange &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to specify minimum range for the rendering shape. <br />
+  	By default minimum range shapes will use Indication  <a href="w_preferences.html">editor color</a>.<br />
+  	This property must be used in conjunction with &quot;<strong>//$ArgN</strong>&quot; and &quot;<strong>//$ArgNRenderStyle</strong>&quot; properties.<br />
+  	<br />
+	
+	<strong><a name="argminrangecolor" id="argminrangecolor"></a>//$ArgNMinRangeColor &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to specify the color used when rendering the minimum range shape. Supported values are hex color (like &quot;<strong>FF0000</strong>&quot;), HTML-formatted hex color (like &quot;<strong>#F00</strong>&quot; or &quot;<strong>#FF0000</strong>&quot;) or color name (like &quot;<strong>Red</strong>&quot;).<br />
+  	By default minimum range shapes will use Indication  <a href="w_preferences.html">editor color</a>.<br />
+  	This property must be used in conjunction with &quot;<strong>//$ArgN</strong>&quot;, &quot;<strong>//$ArgNRenderStyle</strong>&quot; and &quot;<strong>//$ArgNMinRange</strong>&quot; properties.<br />
+  	<br />
+	
+	<strong><a name="argmaxrange" id="argmaxrange"></a>//$ArgNMaxRange &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to specify maximum range for the rendering shape. <br />
+  	By default maximum range shapes will use Indication  <a href="w_preferences.html">editor color</a>.<br />
+  	This property must be used in conjunction with &quot;<strong>//$ArgN</strong>&quot; and &quot;<strong>//$ArgNRenderStyle</strong>&quot; properties.<br />
+  	<br />
+	
+	<strong><a name="argmaxrangecolor" id="argmaxrangecolor"></a>//$ArgNMaxRangeColor &lt;integer&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to specify the color used when rendering the maximum range shape. Supported values are hex color (like &quot;<strong>FF0000</strong>&quot;), HTML-formatted hex color (like &quot;<strong>#F00</strong>&quot; or &quot;<strong>#FF0000</strong>&quot;) or color name (like &quot;<strong>Red</strong>&quot;).<br />
+  	By default maximum range shapes will use Indication  <a href="w_preferences.html">editor color</a>.<br />
+  	This property must be used in conjunction with &quot;<strong>//$ArgN</strong>&quot;, &quot;<strong>//$ArgNRenderStyle</strong>&quot; and &quot;<strong>//$ArgNMaxRange</strong>&quot; properties.<br />
+  	<br />
+  	
+  	<strong><a name="argenum" id="argenum"></a>//$ArgNEnum &lt;string or structure&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to specify an enum for this argument. This can be either a name of an enum defined in the Game Configuration, or an explicit enum definition. This property must be used in conjunction with the &quot;<strong>//$ArgN</strong>&quot; property.<br />
+  	<br />
+  	<strong><a name="color" id="color"></a>//$Color &lt;color index&gt;</strong> - <span class="red">GZDB only</span>.<br />
+  	Allows to override category color for this actor. Possible values are:
+  	<ul>
+    <li>&nbsp;&nbsp;0 - <span style="color:#696969">&#9608;</span> Dark Gray;</li>
+    <li>&nbsp;&nbsp;1 - <span style="color:#4169E1">&#9608;</span> Blue;</li>
+    <li>&nbsp;&nbsp;2 - <span style="color:#228B22">&#9608;</span> Green;</li>
+    <li>&nbsp;&nbsp;3 - <span style="color:#20B2AA">&#9608;</span> Cyan;</li>
+    <li>&nbsp;&nbsp;4 - <span style="color:#B22222">&#9608;</span> Red;</li>
+    <li>&nbsp;&nbsp;5 - <span style="color:#9400D3">&#9608;</span> Magenta;</li>
+    <li>&nbsp;&nbsp;6 - <span style="color:#B8860B">&#9608;</span> Brown;</li>
+    <li>&nbsp;&nbsp;7 - <span style="color:#C0C0C0">&#9608;</span> Gray;</li>
+    <li>&nbsp;&nbsp;8 - <span style="color:#808080">&#9608;</span> Light Gray;</li>
+    <li>&nbsp;&nbsp;9 - <span style="color:#00BFFF">&#9608;</span> Light Blue;</li>
+    <li>10 - <span style="color:#32CD32">&#9608;</span> Light Green;</li>
+    <li>11 - <span style="color:#AFEEEE">&#9608;</span> Light Cyan;</li>
+    <li>12 - <span style="color:#FF6347">&#9608;</span> Light Red;</li>
+    <li>13 - <span style="color:#EE82EE">&#9608;</span> Light Magenta;</li>
+    <li>14 - <span style="color:#FFFF00">&#9608;</span> Yellow;</li>
+    <li>15 - <span style="color:#F5F5F5">&#9608;</span> White;</li>
+    <li>16 - <span style="color:#FFB6C1">&#9608;</span> Pink;</li>
+    <li>17 - <span style="color:#FF8C00">&#9608;</span> Light Orange;</li>
+    <li>18 - <span style="color:#BDB76B">&#9608;</span> Light Brown (<strong>default</strong>);</li>
+    <li>19 - <span style="color:#DAA520">&#9608;</span> Orange;</li>
+  </ul>
+    <strong>//$Obsolete &lt;reason&gt;</strong> - <span class="red">GZDB only</span>.<br />
+    Marks the thing as obsolete. It will be detected by &quot;Check obsolete things&quot; <a href="e_mapanalysis.html">Map Analysis Mode</a> check and will be marked in the <a href="w_thingedit.html">Thing Properties Window</a> and the Thing Info panel.<br />
+    <br />
+  <strong>Note:</strong> It is a good idea to include the Doom Editor Number after the actor definition if you want it to show in Doom Builder, even if it is replacing a standard Doom actor.<br />
+  <br />
+  <strong>Example:</strong><br />
+  <pre>
+Actor ChexShield : ResistanceRune replaces ResistanceRune 5104
+{
+  //$Category &quot;Pickups/Chex Powerups&quot;
+  //$Sprite ARMXA0
+  //$IgnoreRenderstyle
+  //$Title "Chex Shield"
+  //$Color 12
+  //$NotAngled
+  //$Obsolete "That's a strange powerup. Consider replacing it with something else..."
+  
+  //$Arg0 "Respawn Delay"
+  //$Arg0ToolTip "Positive values specify delay in tics.\nNegative - in seconds."
+  
+  //$Arg1 "Enum Example 1"
+  //$Arg1ToolTip "Config enum example"
+  //$Arg1Type 11
+  //$Arg1Enum "keys"
+	
+  //$Arg2 "Enum Example 2"
+  //$Arg2ToolTip "Explicit enum example"
+  //$Arg2Type 11
+  //$Arg2Enum { 1 = "First option"; 2 = "Second option"; 667 = "Option 667"; }
+  
+  //$Arg3 "Radius"
+  //$Arg3Type 23
+  //$Arg3Default 32
+  //$Arg3RenderStyle &quot;Circle&quot;
+  //$Arg3RenderColor #ff00ff
+  //$Arg3MinRange 32
+  //$Arg3MaxRange 512
+  //$Arg3MinRangeColor #0000ff
+  //$Arg3MaxRangeColor #ff0000
+	
+  //$Arg4 "Height"
+  //$Arg4Type 24
+  //$Arg4Default 64
+  
+
+  Height 44
+  Radius 26
+  RenderStyle None
+  Inventory.PickupMessage "Picked up the energized Chex armor!"
+  
+
+  States
+  {
+    Spawn:
+      ARMX A 1
+      Loop
+  }
+}
+
+//$GZDB_SKIP
+actor SuperGiantImpBall : DoomImpBall
+{
+  Scale 8.0
+  Damage 30
+}
+</pre>
+	<br /><br />
+<span class="big">Category definitions (GZDB only):</span><br />
+<br />
+Thing categories can be defined in DECORATE using <strong>#region</strong> / <strong>#endregion</strong> blocks. Region name is used as thing category title. &quot;<strong>//$Category</strong>&quot; actor block definition overrides these. Additional information can be conveyed with keys in the form of special comments inserted within <strong>#region</strong> / <strong>#endregion</strong> block (these keys replicate Game Configuration <a href="gc_thingsettings.html#catdefs">thing category properties</a> with a slightly different syntax):<br />
+<br />
+  <b class="fat">//$Sorted</b> (integer) [0 .. 1]<br />
+  When set to 1, items in this category will be sorted by title.<br />
+  <br />
+  <b class="fat">//$Color</b> (integer) [0 .. 19]<br />
+  Sets the color used by things in this category.<br />Uses the same values as &quot;<strong>//$Color</strong>&quot; <a href="#color">thing definition</a>.<br />
+  
+  <p><b class="fat">//$Arrow</b> (integer) [0 .. 1]<br />
+    When set to 1, thing angle will be shown as an arrow in Classic and Visual modes.<br />
+    <br />
+    <b class="fat">//$Sprite</b> (string)<br />
+    Sets the sprite graphic to use when rendering this thing or things in this category. This should be fully qualified sprite name without file extension, like &quot;CPOSA2&quot;.<br />
+    You can also use  images from the"Sprites" directory by prefixing an image name without extension with &quot;internal:&quot;, like so: &quot;internal:Actor&quot;.<br />
+    <br />
+  <b class="fat">//$Error</b> (integer) [0 .. 2]<br />
+  Sets the stuck things error checking mode to use on this thing. <br />
+  Possible values are:
+  <ul>
+    <li>0 - Don't check this thing.</li>
+    <li>1 - Check if the thing is outside of map geometry.</li>
+    <li>2 - Check if the thing is outside of map geometry or stuck in another thing.</li>
+  </ul>
+  Default value is<strong> 1</strong>.<br />
+  <br />
+  <b class="fat">//$FixedSize</b> (boolean)<br />
+  When set to true, thing will be rendered as sizeless in Classic and Visual modes.<br />
+  <br />
+  <b class="fat">//$FixedRotation</b> (boolean)<br />
+  When set to true, thing's angle won't be changed when rotating things using Edit Selection mode.<br />
+  <br />
+  <b class="fat">//$AbsoluteZ</b> (boolean)<br />
+  When set to true, thing's vertical position will be used as an absolute value instead of distance from floor/ceiling in Visual mode.<br />
+  <br />
+  <strong>Example:</strong><br />
+<pre>
+#region Imp Balls
+//$Color 4
+//$Sprite "BALLS0"
+
+  actor SuperGiantImpBall : DoomImpBall
+  {
+    //$Title "I'm in the 'Imp Balls' group!"
+    Scale 8.0
+    Damage 30
+  }
+
+#endregion  
+</pre>
+  </p>
+</div>
+</body>

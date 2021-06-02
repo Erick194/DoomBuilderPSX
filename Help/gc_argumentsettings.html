@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Game Configuration - Linedefs Settings</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" type="text/css" href="default.css" media="screen" title="Default" />
+</head>
+<body>
+<object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+  <param name="keyword" value="Configurations">
+  <param name="keyword" value="Game Configurations">
+  <param name="keyword" value="Action">
+  <param name="keyword" value="Argument">
+</object>
+<div id="title">
+  <h1>Game Configuration - Action Argument Settings</h1>
+</div>
+<div id="contents">
+  <p> <b class="fat">title</b> (string)<br />
+    Sets the title of this argument.<br />
+    Argument title can be also set in <a href="gc_decoratekeys.html#argtitle">DECORATE</a>.<br />
+    <br />
+    <b class="fat"><a name="argtooltip" id="argtooltip"></a>tooltip</b> (string) - <span class="red">GZDB only</span><br />
+    Allows to specify a tooltip text displayed for a <a href="gc_thingsettings.html#argtooltip">Thing</a> or Linedef argument definition. Newline character ("\n") can be used to format the text.<br />
+    Argument tooltips can be also set in <a href="gc_decoratekeys.html#argtooltip">DECORATE</a>.<br />
+    <strong>Example:</strong> </p>
+  <pre>arg1
+{
+    title = "Mirror Polyobj Number";
+    <span class="blue">tooltip = "Polyobject that will mirror\nthis one's movements.";</span>
+}</pre>
+  <br />
+  <b class="fat"><a name="argtype" id="argtype"></a>type</b> (integer)<br />
+  Sets the type of this argument. This changes the behaviour of  Argument inputs in <a href="w_linedefedit.html">Linedef</a> and <a href="w_thingedit.html">Thing Edit</a> windows.<br />
+  Argument type can be also set in <a href="gc_decoratekeys.html#argtype">DECORATE</a>.<br />
+  <strong>Supported values are:</strong><br />
+  <br />
+  <ul style="list-style-type:none">
+    <li>0 = Integer (default)</li>
+    <li>4 = Action special</li>
+    <li>5 = Sector effect</li>
+    <li>8 = Angle in degrees</li>
+    <li>10 = XXRRGGBB color</li>
+    <li>11 = Enum option</li>
+    <li>12 = Enum bits</li>
+    <li>13 = Sector tag</li>
+    <li>14 = Thing tag</li>
+    <li>15 = Linedef tag</li>
+    <li>22 = Byte angle (<span class="red">GZDB only</span>)</li>
+    <li>23 = Thing radius (<span class="red">GZDB only</span>)</li>
+    <li>24 = Thing height (<span class="red">GZDB only</span>)</li>
+	<li>25 = Polyobject number (<span class="red">GZDB only</span>)</li>
+	<li>26 = Enum option + enum bits (<span class="red">GZDB only</span>)</li
+  >
+  </ul>
+  <p><b class="fat">targetclasses</b> (string) - <span class="red">GZDB only</span><br />
+    When set, only things of given classes will be shown in the argument dropdown list. Used only when argument <strong>type</strong> is 14.<br />
+    The value can be either a thing class name of a comma-separated list of thing class names:<br />
+  <pre>
+arg0
+{
+    title = &quot;MapSpot Tag&quot;;
+    type = 14;
+    <span class="blue">targetclasses = &quot;MapSpot,MapSpotGravity&quot;;</span>
+}
+</pre>
+  <p><b class="fat">enum</b> (structure or string)<br />
+    Provides a list of predefined values to display for this argument. Used only when argument <strong>type</strong> is 11 or 12.<br />
+    The value can be either a name of a predefined enum:<br />
+  <pre>
+arg0
+{
+    title = &quot;Volume&quot;;
+    type = 11;
+    <span class="blue">enum = &quot;sound_volume&quot;;</span>
+}
+</pre>
+  or an explicit definition:<br />
+  <pre>
+arg0
+{
+    title = "Apply to";
+    type = 11;
+    <span class="blue">enum
+    {
+        0 = "Floor and Ceiling";
+        1 = "Ceiling";
+        2 = "Floor";
+    }</span> 
+}
+</pre>
+  Enums can be also set in <a href="gc_decoratekeys.html#argenum">DECORATE</a>.<br />
+  
+  <p><b class="fat">renderstyle</b> (string) - <span class="red">GZDB only</span><br />
+    Allows to specify a rendering shape to display the value of this argument. Supported values are:<br />
+	<ul>
+	<li>&quot;<strong>Rectangle</strong>&quot;. The argument value is used as rectangle size.</li>
+  	<li>&quot;<strong>Circle</strong>&quot;. The argument value is used as circle radius.</li>
+  	</ul>
+  Rendering shapes can be toggled using "<strong><a href="gzdb/features/general/rendering_toolbar.html">Toggle Event Lines</a></strong>" action/menu button.<br />
+  Currently rendering shapes are supported only for Thing arguments.<br />Currently rendering shapes are shown only in Classic modes.</p>
+  <p><b class="fat">rendercolor</b> (integer) - <span class="red">GZDB only</span><br />
+    Allows to specify a color used by rendering shape. Supported values are hex color (like &quot;<strong>FF0000</strong>&quot;), HTML-formatted hex color (like &quot;<strong>#F00</strong>&quot; or &quot;<strong>#FF0000</strong>&quot;) or color name (like &quot;<strong>Red</strong>&quot;).<br />
+    By default rendering shapes will use Event line <a href="w_preferences.html">editor color</a>.<br />
+    This property must be used in conjunction with the &quot;<b class="fat">renderstyle</b>&quot; property.</p>
+	
+	<p><b class="fat">minrange</b> (integer) - <span class="red">GZDB only</span><br />
+  	Allows to specify minimum range for the rendering shape.<br />
+  	By default minimum range shapes will use Indication  <a href="w_preferences.html">editor color</a>.<br />
+    This property must be used in conjunction with the &quot;<b class="fat">renderstyle</b>&quot; property.</p>
+	
+	<p><b class="fat">minrangecolor</b> (integer) - <span class="red">GZDB only</span><br />
+		Allows to specify the color used when rendering the minimum range shape. Supported values are hex color (like &quot;<strong>FF0000</strong>&quot;), HTML-formatted hex color (like &quot;<strong>#F00</strong>&quot; or &quot;<strong>#FF0000</strong>&quot;) or color name (like &quot;<strong>Red</strong>&quot;).<br />
+By default minimum range shapes will use Indication <a href="w_preferences.html">editor color</a>.<br />
+    This property must be used in conjunction with  &quot;<b class="fat">renderstyle</b>&quot; and &quot;<b class="fat">minrange</b>&quot; properties.</p>
+	
+	<p><b class="fat">maxrange</b> (integer) - <span class="red">GZDB only</span><br />
+  	Allows to specify maximum range for the rendering shape.<br />
+  	By default maximum range shapes will use Indication  <a href="w_preferences.html">editor color</a>.<br />
+    This property must be used in conjunction with the &quot;<b class="fat">renderstyle</b>&quot; property.</p>
+	
+	<p><b class="fat">maxrangecolor</b> (integer) - <span class="red">GZDB only</span><br />
+		Allows to specify the color used when rendering the maximum range shape. Supported values are hex color (like &quot;<strong>FF0000</strong>&quot;), HTML-formatted hex color (like &quot;<strong>#F00</strong>&quot; or &quot;<strong>#FF0000</strong>&quot;) or color name (like &quot;<strong>Red</strong>&quot;).<br />
+By default maximum range shapes will use Indication <a href="w_preferences.html">editor color</a>.<br />
+    This property must be used in conjunction with  &quot;<b class="fat">renderstyle</b>&quot; and &quot;<b class="fat">maxrange</b>&quot; properties.</p>
+	
+<p><b class="fat">flags</b> (structure or string) - <span class="red">GZDB only</span><br />
+    Provides a list of predefined bit flag values to display for this argument. Used  only when argument <strong>type</strong> is 26.<br />
+    The value can be either a name of a predefined enum or an explicit definition.<br />
+	<strong>Example:</strong>
+	<pre>
+	arg4
+	{
+		title = "Flags";
+		type = 26;
+		<span class="green">// Only a single enum value can be selected at a time</span>
+		enum
+		{
+			0 = "Don't copy anything";
+			1 = "Copy floor texture, remove sector special";
+			2 = "Copy floor texture";
+			3 = "Copy floor texture and special";
+		}
+		<span class="green">// Any number of flags values can be selected</span>
+		<span class="blue">flags
+		{
+			4 = "Use numeric model if set, trigger model if not";
+			8 = "Raise floor if set, lower it if not";
+			16 = "Inflict crushing damage";
+		}</span>
+	}</pre>
+  <br />
+  <b class="fat">default</b> (integer) - <span class="red">GZDB only</span><br />
+  Sets the default value for a Thing or Linedef argument definition.<br />
+  Default value can be also set in <a href="gc_decoratekeys.html#argdefault">DECORATE</a>.<br />
+  <strong>Example:</strong>  </p>
+  <pre>9038
+{
+    title = "ColorSetter";
+    arg0
+    {
+        title = "Red";
+        <span class="blue">default = 255;</span>
+    }
+}</pre>
+  </p>
+</div>
+</body>
