@@ -207,7 +207,7 @@ namespace CodeImp.DoomBuilder.Rendering
 		}
 
 
-        //[GEC] psxSetLightLevel
+        //[GEC] psxSetLightLevel	(Note: integer light level, not float!)
         private float LightLevel;
         public float SetLightLevel
         {

@@ -149,7 +149,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
             {
                 fogfactor = CalculateFogFactor(255);
                 base.lightmode = 2;
-                base.lightlevel = (float)(s.Brightness / 255.0f);
+                base.lightlevel = s.Brightness;
             }
 
             // Make vertices

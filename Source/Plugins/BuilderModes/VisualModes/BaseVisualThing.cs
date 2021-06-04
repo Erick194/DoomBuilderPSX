@@ -305,7 +305,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
                         if (General.Map.PSXDOOM)//[GEC]
                         {
-                            base.lightlevel = (float)(brightness / 255.0f);
+                            base.lightlevel = brightness;
                             areabrightness = PixelColor.FromInt(mode.CalculateBrightness(255));
                             areacolor = PixelColor.Modulate(level.colorbelow, areabrightness);
                         }
