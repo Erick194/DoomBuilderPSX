@@ -286,7 +286,7 @@ float4 getFogColor(LitPixelData pd, float4 texColor, float4 sectorColor)
 	}
 	else
 	{
-		color = texColor * sectorColor;
+		color = texColor;
 	}
 
 	return float4(psxR5G5B5BitCrush(color.rgb), color.a);	// DC: bit crush to simulate the PlayStation's limitations

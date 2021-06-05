@@ -234,6 +234,9 @@ namespace CodeImp.DoomBuilder.Config
 			this.locksprite = cfg.ReadSetting("thingtypes." + cat.Name + "." + key + ".locksprite", false); //mxd
 			this.classname = cfg.ReadSetting("thingtypes." + cat.Name + "." + key + ".class", String.Empty); //mxd
 			this.thinglink = cfg.ReadSetting("thingtypes." + cat.Name + "." + key + ".thinglink", 0);
+			
+			// DC: allow 'bright' to be defined on the thing definition
+			this.bright = cfg.ReadSetting("thingtypes." + cat.Name + "." + key + ".bright", false);
 
 			//mxd. Read flagsrename
 			this.flagsrename = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
