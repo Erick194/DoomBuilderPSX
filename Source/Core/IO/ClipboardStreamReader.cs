@@ -140,6 +140,7 @@ namespace CodeImp.DoomBuilder.IO
 				int hceil = reader.ReadInt32();
 				int bright = reader.ReadInt32();
                 int idxcolor = reader.ReadInt32();//[GEC]
+				int idxcolorCeil = reader.ReadInt32();//[GEC]
 
                 //mxd. Tags
                 int numtags = reader.ReadInt32(); //mxd
@@ -182,7 +183,7 @@ namespace CodeImp.DoomBuilder.IO
 				Sector s = map.CreateSector();
 				if(s != null) 
 				{
-					s.Update(hfloor, hceil, tfloor, tceil, effect, stringflags, tags, bright, foffset, fslope, coffset, cslope, idxcolor);//[GEC]
+					s.Update(hfloor, hceil, tfloor, tceil, effect, stringflags, tags, bright, foffset, fslope, coffset, cslope, idxcolor, idxcolorCeil);//[GEC]
 
 					// Add custom fields
 					s.Fields.BeforeFieldsChange();

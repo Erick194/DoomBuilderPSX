@@ -2432,6 +2432,7 @@ namespace CodeImp.DoomBuilder.Map
 				s.CeilHeight = General.Settings.DefaultCeilingHeight;
 				s.Brightness = General.Settings.DefaultBrightness;
                 s.IdxColor = 0;//[GEC]
+				s.IdxColorCeil = 0;//[GEC]
             }
 
 			// Update line textures

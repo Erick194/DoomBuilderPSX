@@ -33,8 +33,11 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupfloorceiling = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.panel = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pnlSectorColor = new System.Windows.Forms.Panel();
+            this.pnlSectorColorCeil = new System.Windows.Forms.Panel();
             this.idxcolor = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
+            this.idxcolorCeil = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -88,8 +91,11 @@
             // 
             this.groupfloorceiling.BackColor = System.Drawing.Color.Transparent;
             this.groupfloorceiling.Controls.Add(this.label10);
-            this.groupfloorceiling.Controls.Add(this.panel);
+            this.groupfloorceiling.Controls.Add(this.label11);
+            this.groupfloorceiling.Controls.Add(this.pnlSectorColor);
+            this.groupfloorceiling.Controls.Add(this.pnlSectorColorCeil);
             this.groupfloorceiling.Controls.Add(this.idxcolor);
+            this.groupfloorceiling.Controls.Add(this.idxcolorCeil);
             this.groupfloorceiling.Controls.Add(this.label7);
             this.groupfloorceiling.Controls.Add(this.label5);
             this.groupfloorceiling.Controls.Add(this.label6);
@@ -121,16 +127,37 @@
             this.label10.Text = "Sector color by index:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // panel
+            // label11
             // 
-            this.panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            this.panel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panel.Location = new System.Drawing.Point(178, 188);
-            this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(20, 20);
-            this.panel.TabIndex = 29;
-            this.panel.Click += new System.EventHandler(this.drawfrom);
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(234, 181);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(76, 27);
+            this.label11.TabIndex = 31;
+            this.label11.Text = "Ceiling sector color by index:";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // pnlSectorColor
+            // 
+            this.pnlSectorColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.pnlSectorColor.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlSectorColor.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlSectorColor.Location = new System.Drawing.Point(178, 188);
+            this.pnlSectorColor.Name = "pnlSectorColor";
+            this.pnlSectorColor.Size = new System.Drawing.Size(20, 20);
+            this.pnlSectorColor.TabIndex = 29;
+            this.pnlSectorColor.Click += new System.EventHandler(this.drawfrom);
+            // 
+            // pnlSectorColorCeil
+            // 
+            this.pnlSectorColorCeil.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            this.pnlSectorColorCeil.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.pnlSectorColorCeil.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pnlSectorColorCeil.Location = new System.Drawing.Point(398, 188);
+            this.pnlSectorColorCeil.Name = "pnlSectorColorCeil";
+            this.pnlSectorColorCeil.Size = new System.Drawing.Size(20, 20);
+            this.pnlSectorColorCeil.TabIndex = 30;
+            this.pnlSectorColorCeil.Click += new System.EventHandler(this.drawfromCeil);
             // 
             // idxcolor
             // 
@@ -150,6 +177,25 @@
             this.idxcolor.StepValues = null;
             this.idxcolor.TabIndex = 28;
             this.idxcolor.WhenTextChanged += new System.EventHandler(this.IdxColor_WhenTextChanged);
+            // 
+            // idxcolorCeil
+            // 
+            this.idxcolorCeil.AllowDecimal = false;
+            this.idxcolorCeil.AllowExpressions = false;
+            this.idxcolorCeil.AllowNegative = true;
+            this.idxcolorCeil.AllowRelative = true;
+            this.idxcolorCeil.ButtonStep = 1;
+            this.idxcolorCeil.ButtonStepBig = 16F;
+            this.idxcolorCeil.ButtonStepFloat = 1F;
+            this.idxcolorCeil.ButtonStepSmall = 1F;
+            this.idxcolorCeil.ButtonStepsUseModifierKeys = true;
+            this.idxcolorCeil.ButtonStepsWrapAround = false;
+            this.idxcolorCeil.Location = new System.Drawing.Point(319, 184);
+            this.idxcolorCeil.Name = "idxcolorCeil";
+            this.idxcolorCeil.Size = new System.Drawing.Size(73, 24);
+            this.idxcolorCeil.StepValues = null;
+            this.idxcolorCeil.TabIndex = 32;
+            this.idxcolorCeil.WhenTextChanged += new System.EventHandler(this.IdxColorCeil_WhenTextChanged);
             // 
             // label7
             // 
@@ -491,7 +537,7 @@
         private CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox heightoffset;
         private System.Windows.Forms.ToolTip tooltip;
         private Controls.ButtonsNumericTextbox idxcolor;
-        private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.Panel pnlSectorColor;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox3;
         private Controls.CheckboxArrayControl flags;
@@ -506,5 +552,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.GroupBox groupeffect;
         private System.Windows.Forms.Label label8;
+        private Controls.ButtonsNumericTextbox idxcolorCeil;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel pnlSectorColorCeil;
     }
 }

@@ -47,6 +47,7 @@ namespace CodeImp.DoomBuilder.Windows
         private struct SectorProperties //mxd
         {
             public readonly int IdxColor;//[GEC]
+            public readonly int IdxColorCeil;//[GEC]
             public readonly int Brightness;
             public readonly int FloorHeight;
             public readonly int CeilHeight;
@@ -56,6 +57,7 @@ namespace CodeImp.DoomBuilder.Windows
             public SectorProperties(Sector s)
             {
                 IdxColor = s.IdxColor;//[GEC]
+                IdxColorCeil = s.IdxColorCeil;//[GEC]
                 Brightness = s.Brightness;
                 FloorHeight = s.FloorHeight;
                 CeilHeight = s.CeilHeight;
@@ -87,8 +89,13 @@ namespace CodeImp.DoomBuilder.Windows
             //idxcolor.StepValues = General.Map.Config.IdxColorLevels;//[GEC]
 
             idxcolor.StepValues = new StepsList();//[GEC]
+            idxcolorCeil.StepValues = new StepsList();//[GEC]
+
             for (int i = 0; i < 256; i++)
+            {
                 idxcolor.StepValues.Add(i);
+                idxcolorCeil.StepValues.Add(i);
+            }
 
             // Fill flags list
             foreach (KeyValuePair<string, string> lf in General.Map.Config.SectorFlags)
@@ -128,6 +135,7 @@ namespace CodeImp.DoomBuilder.Windows
             effect.Value = sc.Effect;
             brightness.Text = sc.Brightness.ToString();
             idxcolor.Text = sc.IdxColor.ToString();//[GEC]
+            idxcolorCeil.Text = sc.IdxColorCeil.ToString();//[GEC]
 
             // Floor/ceiling
             floorheight.Text = sc.FloorHeight.ToString();
@@ -153,6 +161,7 @@ namespace CodeImp.DoomBuilder.Windows
                 if (s.Effect != effect.Value) effect.Empty = true;
                 if (s.Brightness.ToString() != brightness.Text) brightness.Text = "";
                 if (s.IdxColor.ToString() != idxcolor.Text) idxcolor.Text = "";//[GEC]
+                if (s.IdxColorCeil.ToString() != idxcolorCeil.Text) idxcolorCeil.Text = "";//[GEC]
 
                 // Floor/Ceiling
                 if (s.FloorHeight.ToString() != floorheight.Text) floorheight.Text = "";
@@ -175,9 +184,11 @@ namespace CodeImp.DoomBuilder.Windows
                 sectorprops.Add(new SectorProperties(s));
 
                 // Apply new color
-                Lights Col = new Lights();//[GEC]       
+                Lights Col = new Lights();//[GEC]
                 PixelColor rgb = Col.GetLights(s.IdxColor);
-                panel.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
+                PixelColor rgbCeil = Col.GetLights(s.IdxColorCeil);
+                pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
+                pnlSectorColorCeil.BackColor = Color.FromArgb(rgbCeil.r, rgbCeil.g, rgbCeil.b);
             }
 
             // Show sector height
@@ -537,7 +548,7 @@ namespace CodeImp.DoomBuilder.Windows
                     s.IdxColor = sectorprops[i++].IdxColor;
                     // Apply new color
                     PixelColor rgb = Col.GetLights(s.IdxColor);
-                    panel.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
+                    pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
                 }
 
             }
@@ -548,11 +559,43 @@ namespace CodeImp.DoomBuilder.Windows
                     s.IdxColor = General.Clamp(idxcolor.GetResult(sectorprops[i++].IdxColor), 0, 255);
                     // Apply new color
                     PixelColor rgb = Col.GetLights(s.IdxColor);
-                    panel.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
+                    pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
                 }
             }
 
+            General.Map.IsChanged = true;
+            if (OnValuesChanged != null) OnValuesChanged(this, EventArgs.Empty);
+        }
 
+        private void IdxColorCeil_WhenTextChanged(object sender, EventArgs e)
+        {
+            if (preventchanges) return;
+            MakeUndo(); //mxd
+            int i = 0;
+            Lights Col = new Lights();//[GEC]
+
+            //restore values
+            if (string.IsNullOrEmpty(idxcolorCeil.Text))
+            {
+                foreach (Sector s in sectors)
+                {
+                    s.IdxColorCeil = sectorprops[i++].IdxColorCeil;
+                    // Apply new color
+                    PixelColor rgb = Col.GetLights(s.IdxColorCeil);
+                    pnlSectorColorCeil.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
+                }
+
+            }
+            else //update values
+            {
+                foreach (Sector s in sectors)
+                {
+                    s.IdxColorCeil = General.Clamp(idxcolorCeil.GetResult(sectorprops[i++].IdxColorCeil), 0, 255);
+                    // Apply new color
+                    PixelColor rgb = Col.GetLights(s.IdxColorCeil);
+                    pnlSectorColorCeil.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
+                }
+            }
 
             General.Map.IsChanged = true;
             if (OnValuesChanged != null) OnValuesChanged(this, EventArgs.Empty);
@@ -561,15 +604,30 @@ namespace CodeImp.DoomBuilder.Windows
         private void drawfrom(object sender, EventArgs e)
         {
             LightColors frm = new LightColors();
-
             frm.IindexCol = idxcolor.GetResult(0);
+
             if (frm.ShowDialog(this.ParentForm) == DialogResult.OK)
             {
                 // Apply new color
                 Lights Col = new Lights();//[GEC]
                 PixelColor rgb = Col.GetLights(frm.IindexCol);
                 idxcolor.Text = frm.IdxCol.ToString();//[GEC]
-                panel.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
+                pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
+            }
+        }
+
+        private void drawfromCeil(object sender, EventArgs e)
+        {
+            LightColors frm = new LightColors();
+            frm.IindexCol = idxcolorCeil.GetResult(0);
+
+            if (frm.ShowDialog(this.ParentForm) == DialogResult.OK)
+            {
+                // Apply new color
+                Lights Col = new Lights();//[GEC]
+                PixelColor rgb = Col.GetLights(frm.IindexCol);
+                idxcolorCeil.Text = frm.IdxCol.ToString();//[GEC]
+                pnlSectorColorCeil.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
             }
         }
     }
