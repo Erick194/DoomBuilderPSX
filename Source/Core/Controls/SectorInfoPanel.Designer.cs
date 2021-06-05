@@ -43,6 +43,9 @@ namespace CodeImp.DoomBuilder.Controls
             this.floorAngleLabel = new System.Windows.Forms.Label();
             this.floorScaleLabel = new System.Windows.Forms.Label();
             this.sectorinfo = new System.Windows.Forms.GroupBox();
+            this.ColorIndex = new System.Windows.Forms.Label();
+            this.panelIndexColor = new System.Windows.Forms.Panel();
+            this.labelIndexColor = new System.Windows.Forms.Label();
             this.panelFadeColor = new System.Windows.Forms.Panel();
             this.panelLightColor = new System.Windows.Forms.Panel();
             this.labelFade = new System.Windows.Forms.Label();
@@ -72,9 +75,6 @@ namespace CodeImp.DoomBuilder.Controls
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.flagsPanel = new System.Windows.Forms.GroupBox();
             this.flags = new CodeImp.DoomBuilder.Controls.TransparentListView();
-            this.ColorIndex = new System.Windows.Forms.Label();
-            this.panelIndexColor = new System.Windows.Forms.Panel();
-            this.labelIndexColor = new System.Windows.Forms.Label();
             label13 = new System.Windows.Forms.Label();
             label5 = new System.Windows.Forms.Label();
             this.sectorinfo.SuspendLayout();
@@ -240,6 +240,38 @@ namespace CodeImp.DoomBuilder.Controls
             this.sectorinfo.TabIndex = 2;
             this.sectorinfo.TabStop = false;
             this.sectorinfo.Text = " Sector ";
+            // 
+            // ColorIndex
+            // 
+            this.ColorIndex.AutoSize = true;
+            this.ColorIndex.Enabled = false;
+            this.ColorIndex.Location = new System.Drawing.Point(257, 78);
+            this.ColorIndex.Name = "ColorIndex";
+            this.ColorIndex.Size = new System.Drawing.Size(13, 13);
+            this.ColorIndex.TabIndex = 264;
+            this.ColorIndex.Text = "0";
+            this.ColorIndex.Visible = false;
+            // 
+            // panelIndexColor
+            // 
+            this.panelIndexColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelIndexColor.Enabled = false;
+            this.panelIndexColor.Location = new System.Drawing.Point(282, 79);
+            this.panelIndexColor.Name = "panelIndexColor";
+            this.panelIndexColor.Size = new System.Drawing.Size(12, 12);
+            this.panelIndexColor.TabIndex = 263;
+            this.panelIndexColor.Visible = false;
+            // 
+            // labelIndexColor
+            // 
+            this.labelIndexColor.Enabled = false;
+            this.labelIndexColor.Location = new System.Drawing.Point(183, 79);
+            this.labelIndexColor.Name = "labelIndexColor";
+            this.labelIndexColor.Size = new System.Drawing.Size(70, 14);
+            this.labelIndexColor.TabIndex = 262;
+            this.labelIndexColor.Text = "Color Index:";
+            this.labelIndexColor.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.labelIndexColor.Visible = false;
             // 
             // panelFadeColor
             // 
@@ -533,6 +565,7 @@ namespace CodeImp.DoomBuilder.Controls
             this.flags.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.flags.CheckBoxes = true;
             this.flags.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.flags.HideSelection = false;
             this.flags.Location = new System.Drawing.Point(6, 18);
             this.flags.Name = "flags";
             this.flags.Scrollable = false;
@@ -541,38 +574,6 @@ namespace CodeImp.DoomBuilder.Controls
             this.flags.TabIndex = 0;
             this.flags.UseCompatibleStateImageBehavior = false;
             this.flags.View = System.Windows.Forms.View.List;
-            // 
-            // ColorIndex
-            // 
-            this.ColorIndex.AutoSize = true;
-            this.ColorIndex.Enabled = false;
-            this.ColorIndex.Location = new System.Drawing.Point(257, 78);
-            this.ColorIndex.Name = "ColorIndex";
-            this.ColorIndex.Size = new System.Drawing.Size(13, 13);
-            this.ColorIndex.TabIndex = 264;
-            this.ColorIndex.Text = "0";
-            this.ColorIndex.Visible = false;
-            // 
-            // panelIndexColor
-            // 
-            this.panelIndexColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelIndexColor.Enabled = false;
-            this.panelIndexColor.Location = new System.Drawing.Point(282, 79);
-            this.panelIndexColor.Name = "panelIndexColor";
-            this.panelIndexColor.Size = new System.Drawing.Size(12, 12);
-            this.panelIndexColor.TabIndex = 263;
-            this.panelIndexColor.Visible = false;
-            // 
-            // labelIndexColor
-            // 
-            this.labelIndexColor.Enabled = false;
-            this.labelIndexColor.Location = new System.Drawing.Point(183, 79);
-            this.labelIndexColor.Name = "labelIndexColor";
-            this.labelIndexColor.Size = new System.Drawing.Size(70, 14);
-            this.labelIndexColor.TabIndex = 262;
-            this.labelIndexColor.Text = "Color Index:";
-            this.labelIndexColor.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.labelIndexColor.Visible = false;
             // 
             // SectorInfoPanel
             // 
