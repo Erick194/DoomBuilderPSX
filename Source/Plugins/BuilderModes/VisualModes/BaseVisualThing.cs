@@ -305,7 +305,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
                         if (General.Map.PSXDOOM)//[GEC]
                         {
-                            base.lightlevel = (float)(brightness / 255.0f);
+                            base.lightlevel = sd.Sector.Brightness;
                             areabrightness = PixelColor.FromInt(mode.CalculateBrightness(255));
                             areacolor = PixelColor.Modulate(level.colorbelow, areabrightness);
                         }
@@ -337,6 +337,11 @@ namespace CodeImp.DoomBuilder.BuilderModes
 						//mxd. Calculate fogfactor
 						fogfactor = VisualGeometry.CalculateFogFactor(level.sector, level.brightnessbelow);
 					}
+
+                    if (General.Map.PSXDOOM)//[GEC]
+                    {
+                        base.lightlevel = 128;	// Fullbright: light level '128' means full brightness, anything over that is over-bright
+                    }
 				}
             }
 

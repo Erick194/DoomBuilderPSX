@@ -317,7 +317,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 			int lightlevel = lightabsolute ? lightvalue : sd.Ceiling.brightnessbelow + lightvalue;
             if (General.Map.PSXDOOM)//[GEC]
             {
-                base.lightlevel = (float)(sd.Ceiling.sector.Brightness / 255.0f);
+                base.lightlevel = sd.Ceiling.sector.Brightness;
                 lightlevel = 255;
             }
 

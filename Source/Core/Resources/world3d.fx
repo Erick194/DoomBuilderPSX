@@ -38,7 +38,7 @@ struct LitPixelData
 	float4 pos		  : POSITION;
 	float4 color	  : COLOR0;
 	float2 uv		    : TEXCOORD0;
-	float3 pos_w    : TEXCOORD1; //mxd. pixel position in world space
+	float4 pos_w    : TEXCOORD1; //mxd. pixel position in world space (DC: added a 'w' component to encode pixel depth)
 	float3 normal   : TEXCOORD2; //mxd. normal
 };
 
@@ -137,7 +137,8 @@ LitPixelData vs_customvertexcolor_fog(VertexData vd)
 	
 	// Fill pixel data input
 	pd.pos = mul(float4(vd.pos, 1.0f), worldviewproj);
-	pd.pos_w = mul(float4(vd.pos, 1.0f), world).xyz;
+	pd.pos_w.xyz = mul(float4(vd.pos, 1.0f), world).xyz;
+	pd.pos_w.w = pd.pos.z;
 	pd.color = vertexColor;
 	pd.uv = vd.uv;
 	pd.normal = vd.normal;
@@ -151,7 +152,8 @@ LitPixelData vs_lightpass(VertexData vd)
 {
 	LitPixelData pd;
 	pd.pos = mul(float4(vd.pos, 1.0f), worldviewproj);
-	pd.pos_w = mul(float4(vd.pos, 1.0f), world).xyz;
+	pd.pos_w.xyz = mul(float4(vd.pos, 1.0f), world).xyz;
+	pd.pos_w.w = pd.pos.z;
 	pd.color = vd.color;
 	pd.uv = vd.uv;
 	pd.normal = vd.normal;
@@ -203,78 +205,92 @@ float4 ps_fullbright_highlight(PixelData pd) : COLOR
 	return float4(highlightcolor.rgb * highlightcolor.a + (tcolor.rgb - 0.4f * highlightcolor.a), max(pd.color.a + 0.25f, 0.5f));
 }
 
-//[GEC] Algoritmo por Erick Vasquez
-float4 PSXClut(float4 color)
+//----------------------------------------------------------------------------------------------------------------------
+// DC: calculations borrowed from PsyDoom to help accurately replicate PSX Doom in-game shading.
+// Quantizes/truncates the given color to R5G5B5 in a way that mimics how the PS1 truncates color.
+// Used to help reproduce the shading of the PlayStation.
+//----------------------------------------------------------------------------------------------------------------------
+float3 psxR5G5B5BitCrush(float3 color)
 {
-	float r = floor((color.r * 255.0) / 8.0);
-	float g = floor((color.g * 255.0) / 8.0) * 32.0;
-	float b = floor((color.b * 255.0) / 8.0) * 1024.0;
-
-	color.r = ((r * 8.0)) / 255.0;
-	color.g = ((g / 32.0) * 8.0) / 255.0;
-	color.b = ((b / 1024.0) * 8.0) / 255.0;
-
-	return color;
+	// Note: I added a slight amount here to prevent weird rounding/precision issues.
+	// This small bias prevents artifacts where pixels rapidly cycle between one 5-bit color component and the next.
+	return trunc(color * 31 + 0.0001) / 31;
 }
 
-//[GEC] Algoritmo por Erick Vasquez
-float R_DoomLightingEquationPSX(LitPixelData pd, float light)
+//----------------------------------------------------------------------------------------------------------------------
+// DC: calculations borrowed from PsyDoom to help accurately replicate PSX Doom in-game shading.
+// Compute the light diminishing multiplier for a pixel Z depth.
+//----------------------------------------------------------------------------------------------------------------------
+float getLightDiminishingMultiplier(float z)
 {
-	float Lightscale;
-	float Dist = distance(pd.pos_w, campos.xyz);
+	// Compute the basic light diminishing multiplier; a value of '128' means '1.0x' or no-change
+	float intensity;
 
 	if (LightMode == 1)
-		Dist = distance(pd.pos_w, campos.xy);
-
-	float Factor = (400.0 - Dist) / (1000.0);
-
-	if (LightMode == 1)
-		Factor = (400.0 - Dist) / (1000.0);
-	else if (LightMode == 2)
-		Factor = (250.0 - (Dist)) / (1040.0);
-	else if (LightMode == 3)
-		Factor = (400.0 - Dist) / (1000.0);
-
-	Factor = clamp(Factor, 0.0, (50.0 / 255.0)) * 255.0;
-
-	float L = (light * 255.0);
-	L = clamp(L - 8.0, 0.0, 255.0) / 2.0;
-
-	float Shade = clamp((L * (32.0 + Factor) + 32.0 / 2.0) / 32.0, L, 255.0);
-
-	Lightscale = clamp(Shade / 255.0, 0.0, 1.0);
-
-	return Lightscale;
-}
-
-//mxd. This adds fog color to current pixel color
-
-float4 getFogColor(LitPixelData pd, float4 color)
-{
-	float fogdist = max(16.0f, distance(pd.pos_w, campos.xyz));
-	float fogfactor = exp2(campos.w * fogdist);
-
-	color.rgb = lerp(lightColor.rgb, color.rgb, fogfactor);
-
-	if (LightMode != 0)
 	{
-		float newlightlevel = R_DoomLightingEquationPSX(pd, LightLevel);
-
-		color.rgb *= newlightlevel;
-		{
-			float level = 2.0;
-			if (LightMode == 3)
-				level = 1.2;
-
-			color.r = clamp(color.r * level, 0.0, 1.0);
-			color.g = clamp(color.g * level, 0.0, 1.0);
-			color.b = clamp(color.b * level, 0.0, 1.0);
-		}
-
-		color = PSXClut(color);
+		intensity = ((128.0 * 65536.0) / z) / 256.0;	// Walls
+	}
+	else if (LightMode == 2)
+	{
+		intensity = 160.0 - z * 0.5;	// Floors
+	}
+	else
+	{
+		intensity = 128.0;	// Things (no change)
 	}
 
-	return color;
+	// Clamp the intensity to the min/max allowed amounts (0.5x to 1.25x in normalized coords) and add a little
+	// bias to fix precision issues and flipping back and forth between values when the calculations are close:
+	intensity = trunc(clamp(intensity, 64.0, 160.0) + 0.0001);
+
+    // Scale the diminish intensity back to normalized color coords rather than 0-128
+    return intensity / 128.0;
+}
+
+//----------------------------------------------------------------------------------------------------------------------
+// DC: calculations borrowed from PsyDoom to help accurately replicate PSX Doom in-game shading.
+// Compute the color for a pixel, given the texture color, sector color, light level (integer) and z-depth of the pixel.
+//----------------------------------------------------------------------------------------------------------------------
+float4 doPsxDoomShading(float4 texColor, float4 sectorColor, float lightLevel, float z){
+	// Convert input sector color to an integer value and modulate sector color by the light level (already an integer)
+	sectorColor.rgb = sectorColor.rgb * 255.0;
+	sectorColor.rgb = trunc((sectorColor.rgb * lightLevel) / 256.0);
+
+	// Compute color multiply after accounting for sector light color and light diminishing effects and then normalize.
+	// Add a little bias also to prevent switching back and forth between cases that are close, due to float inprecision.
+	float3 colorMul = trunc(sectorColor.rgb * getLightDiminishingMultiplier(z) + 0.0001) / 128.0;
+
+	// The PSX renderer doesn't allow the color multiply to go larger than this
+	colorMul = min(colorMul, 255.0 / 128.0);
+
+	// Make sure the input texture only uses 5-bit color to simulate the PlayStation's limitations.
+	// It might be the case that the user is using 8-bit color (preview) textures to edit the level, which will later be
+	// converted to the PlayStation's palette, which has 5-bit source color components. This truncation is an estimation
+	// of how all these conversions might look...
+	texColor.rgb *= 31;
+	texColor.rgb = round(texColor.rgb);
+	texColor.rgb /= 31;
+
+	// Apply the color multiply and return the shaded pixel
+	return float4(texColor.rgb * colorMul, texColor.a);
+}
+
+// mxd. This adds fog color to current pixel color.
+// DC: removed fog to simplify the shading since it is not something that is used in-game.
+float4 getFogColor(LitPixelData pd, float4 texColor, float4 sectorColor)
+{
+	float4 color;
+	
+	if (LightMode != 0)
+	{
+		color = doPsxDoomShading(texColor, sectorColor, LightLevel, pd.pos_w.w);
+	}
+	else
+	{
+		color = texColor;
+	}
+
+	return float4(psxR5G5B5BitCrush(color.rgb), color.a);	// DC: bit crush to simulate the PlayStation's limitations
 }
 
 //mxd. Shaders with fog calculation
@@ -285,7 +301,7 @@ float4 ps_main_fog(LitPixelData pd) : COLOR
 	tcolor = lerp(tcolor, float4(stencilColor.rgb, tcolor.a), stencilColor.a);
 	if(tcolor.a == 0) return tcolor;
 	
-	return getFogColor(pd, tcolor * pd.color);
+	return getFogColor(pd, tcolor, pd.color);
 }
 
 // Normal pixel shader with highlight
@@ -296,7 +312,7 @@ float4 ps_main_highlight_fog(LitPixelData pd) : COLOR
 	if(tcolor.a == 0) return tcolor;
 	
 	// Blend texture color and vertex color
-	float4 ncolor = getFogColor(pd, tcolor * pd.color);
+	float4 ncolor = getFogColor(pd, tcolor, pd.color);
 	
 	return float4(highlightcolor.rgb * highlightcolor.a + (ncolor.rgb - 0.4f * highlightcolor.a), max(ncolor.a + 0.25f, 0.5f));
 }
@@ -319,13 +335,13 @@ float4 ps_lightpass(LitPixelData pd) : COLOR
 	//is face facing away from light source?
 	// [ZZ] oddly enough pd.normal is not a proper normal, so using dot on it returns rather unexpected results. wrapped in normalize().
 	//      update 01.02.2017: offset the equation by 3px back to try to emulate GZDoom's broken visibility check.
-	float diffuseContribution = dot(normalize(pd.normal), normalize(lightPosAndRadius.xyz - pd.pos_w + normalize(pd.normal)*3));
+	float diffuseContribution = dot(normalize(pd.normal), normalize(lightPosAndRadius.xyz - pd.pos_w.xyz + normalize(pd.normal)*3));
 	if (diffuseContribution < 0 && ignoreNormals < 0.5)
 		clip(-1);
 	diffuseContribution = max(diffuseContribution, 0); // to make sure
 
 	//is pixel in light range?
-	float dist = distance(pd.pos_w, lightPosAndRadius.xyz);
+	float dist = distance(pd.pos_w.xyz, lightPosAndRadius.xyz);
 	if(dist > lightPosAndRadius.w)
 		clip(-1);
 
@@ -342,7 +358,7 @@ float4 ps_lightpass(LitPixelData pd) : COLOR
     
     if (spotLight > 0.5)
     {
-        float3 lightDirection = normalize(lightPosAndRadius.xyz - pd.pos_w);
+        float3 lightDirection = normalize(lightPosAndRadius.xyz - pd.pos_w.xyz);
         float cosDir = dot(lightDirection, lightOrientation);
         float df = smoothstep(light2Radius.y, light2Radius.x, cosDir);
         lightColorMod.rgb *= df;
