@@ -29,30 +29,30 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label label3;
-            System.Windows.Forms.GroupBox groupfloorceiling;
-            System.Windows.Forms.Label label7;
-            System.Windows.Forms.Label label5;
-            System.Windows.Forms.Label label6;
-            System.Windows.Forms.Label label9;
-            System.Windows.Forms.Label label2;
-            System.Windows.Forms.Label label4;
-            System.Windows.Forms.GroupBox groupeffect;
-            System.Windows.Forms.Label label8;
+            this.label1 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.groupfloorceiling = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
             this.panel = new System.Windows.Forms.Panel();
             this.idxcolor = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.heightoffset = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.brightness = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.ceilingheight = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.sectorheightlabel = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.sectorheight = new System.Windows.Forms.Label();
             this.floortex = new CodeImp.DoomBuilder.Controls.FlatSelectorControl();
             this.floorheight = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
             this.ceilingtex = new CodeImp.DoomBuilder.Controls.FlatSelectorControl();
+            this.groupeffect = new System.Windows.Forms.GroupBox();
             this.browseeffect = new System.Windows.Forms.Button();
             this.effect = new CodeImp.DoomBuilder.Controls.ActionSelectorControl();
+            this.label8 = new System.Windows.Forms.Label();
             this.tagSelector = new CodeImp.DoomBuilder.Controls.TagSelector();
             this.tooltip = new System.Windows.Forms.ToolTip(this.components);
             this.apply = new System.Windows.Forms.Button();
@@ -60,67 +60,56 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.flags = new CodeImp.DoomBuilder.Controls.CheckboxArrayControl();
-            label1 = new System.Windows.Forms.Label();
-            label3 = new System.Windows.Forms.Label();
-            groupfloorceiling = new System.Windows.Forms.GroupBox();
-            label7 = new System.Windows.Forms.Label();
-            label5 = new System.Windows.Forms.Label();
-            label6 = new System.Windows.Forms.Label();
-            label9 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            label4 = new System.Windows.Forms.Label();
-            groupeffect = new System.Windows.Forms.GroupBox();
-            label8 = new System.Windows.Forms.Label();
-            groupfloorceiling.SuspendLayout();
-            groupeffect.SuspendLayout();
+            this.groupfloorceiling.SuspendLayout();
+            this.groupeffect.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
-            label1.Location = new System.Drawing.Point(271, 18);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(83, 16);
-            label1.TabIndex = 15;
-            label1.Text = "Floor";
-            label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label1.Location = new System.Drawing.Point(271, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 16);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Floor";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label3
             // 
-            label3.Location = new System.Drawing.Point(363, 18);
-            label3.Name = "label3";
-            label3.Size = new System.Drawing.Size(83, 16);
-            label3.TabIndex = 14;
-            label3.Text = "Ceiling";
-            label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label3.Location = new System.Drawing.Point(363, 18);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 16);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Ceiling";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // groupfloorceiling
             // 
-            groupfloorceiling.BackColor = System.Drawing.Color.Transparent;
-            groupfloorceiling.Controls.Add(this.label10);
-            groupfloorceiling.Controls.Add(this.panel);
-            groupfloorceiling.Controls.Add(this.idxcolor);
-            groupfloorceiling.Controls.Add(label7);
-            groupfloorceiling.Controls.Add(label5);
-            groupfloorceiling.Controls.Add(label6);
-            groupfloorceiling.Controls.Add(this.heightoffset);
-            groupfloorceiling.Controls.Add(this.brightness);
-            groupfloorceiling.Controls.Add(this.ceilingheight);
-            groupfloorceiling.Controls.Add(label9);
-            groupfloorceiling.Controls.Add(label2);
-            groupfloorceiling.Controls.Add(this.sectorheightlabel);
-            groupfloorceiling.Controls.Add(label4);
-            groupfloorceiling.Controls.Add(this.sectorheight);
-            groupfloorceiling.Controls.Add(this.floortex);
-            groupfloorceiling.Controls.Add(this.floorheight);
-            groupfloorceiling.Controls.Add(this.ceilingtex);
-            groupfloorceiling.Location = new System.Drawing.Point(3, 3);
-            groupfloorceiling.Name = "groupfloorceiling";
-            groupfloorceiling.Size = new System.Drawing.Size(436, 214);
-            groupfloorceiling.TabIndex = 0;
-            groupfloorceiling.TabStop = false;
-            groupfloorceiling.Text = "Floor and ceiling ";
+            this.groupfloorceiling.BackColor = System.Drawing.Color.Transparent;
+            this.groupfloorceiling.Controls.Add(this.label10);
+            this.groupfloorceiling.Controls.Add(this.panel);
+            this.groupfloorceiling.Controls.Add(this.idxcolor);
+            this.groupfloorceiling.Controls.Add(this.label7);
+            this.groupfloorceiling.Controls.Add(this.label5);
+            this.groupfloorceiling.Controls.Add(this.label6);
+            this.groupfloorceiling.Controls.Add(this.heightoffset);
+            this.groupfloorceiling.Controls.Add(this.brightness);
+            this.groupfloorceiling.Controls.Add(this.ceilingheight);
+            this.groupfloorceiling.Controls.Add(this.label9);
+            this.groupfloorceiling.Controls.Add(this.label2);
+            this.groupfloorceiling.Controls.Add(this.sectorheightlabel);
+            this.groupfloorceiling.Controls.Add(this.label4);
+            this.groupfloorceiling.Controls.Add(this.sectorheight);
+            this.groupfloorceiling.Controls.Add(this.floortex);
+            this.groupfloorceiling.Controls.Add(this.floorheight);
+            this.groupfloorceiling.Controls.Add(this.ceilingtex);
+            this.groupfloorceiling.Location = new System.Drawing.Point(3, 3);
+            this.groupfloorceiling.Name = "groupfloorceiling";
+            this.groupfloorceiling.Size = new System.Drawing.Size(436, 214);
+            this.groupfloorceiling.TabIndex = 0;
+            this.groupfloorceiling.TabStop = false;
+            this.groupfloorceiling.Text = "Floor and ceiling ";
             // 
             // label10
             // 
@@ -164,34 +153,34 @@
             // 
             // label7
             // 
-            label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            label7.ForeColor = System.Drawing.SystemColors.HotTrack;
-            label7.Location = new System.Drawing.Point(16, 100);
-            label7.Name = "label7";
-            label7.Size = new System.Drawing.Size(78, 14);
-            label7.TabIndex = 25;
-            label7.Text = "Height offset:";
-            label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.tooltip.SetToolTip(label7, "Changes floor and ceiling height by given value.\r\nUse \"++\" to raise by sector hei" +
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label7.Location = new System.Drawing.Point(16, 100);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(78, 14);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Height offset:";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.tooltip.SetToolTip(this.label7, "Changes floor and ceiling height by given value.\r\nUse \"++\" to raise by sector hei" +
         "ght.\r\nUse \"--\" to lower by sector height.");
             // 
             // label5
             // 
-            label5.Location = new System.Drawing.Point(16, 70);
-            label5.Name = "label5";
-            label5.Size = new System.Drawing.Size(78, 14);
-            label5.TabIndex = 17;
-            label5.Text = "Floor height:";
-            label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label5.Location = new System.Drawing.Point(16, 70);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(78, 14);
+            this.label5.TabIndex = 17;
+            this.label5.Text = "Floor height:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label6
             // 
-            label6.Location = new System.Drawing.Point(16, 40);
-            label6.Name = "label6";
-            label6.Size = new System.Drawing.Size(78, 14);
-            label6.TabIndex = 19;
-            label6.Text = "Ceiling height:";
-            label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label6.Location = new System.Drawing.Point(16, 40);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(78, 14);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Ceiling height:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // heightoffset
             // 
@@ -252,22 +241,22 @@
             // 
             // label9
             // 
-            label9.Location = new System.Drawing.Point(15, 159);
-            label9.Name = "label9";
-            label9.Size = new System.Drawing.Size(78, 14);
-            label9.TabIndex = 2;
-            label9.Text = "Brightness:";
-            label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.label9.Location = new System.Drawing.Point(15, 159);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(78, 14);
+            this.label9.TabIndex = 2;
+            this.label9.Text = "Brightness:";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // label2
             // 
-            label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            label2.Location = new System.Drawing.Point(196, 16);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(114, 16);
-            label2.TabIndex = 15;
-            label2.Text = "Floor";
-            label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(196, 16);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(114, 16);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "Floor";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // sectorheightlabel
             // 
@@ -280,13 +269,13 @@
             // 
             // label4
             // 
-            label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            label4.Location = new System.Drawing.Point(316, 16);
-            label4.Name = "label4";
-            label4.Size = new System.Drawing.Size(114, 16);
-            label4.TabIndex = 14;
-            label4.Text = "Ceiling";
-            label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label4.Location = new System.Drawing.Point(316, 16);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(114, 16);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Ceiling";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // sectorheight
             // 
@@ -338,17 +327,17 @@
             // 
             // groupeffect
             // 
-            groupeffect.BackColor = System.Drawing.Color.Transparent;
-            groupeffect.Controls.Add(this.browseeffect);
-            groupeffect.Controls.Add(this.effect);
-            groupeffect.Controls.Add(label8);
-            groupeffect.Controls.Add(this.tagSelector);
-            groupeffect.Location = new System.Drawing.Point(4, 223);
-            groupeffect.Name = "groupeffect";
-            groupeffect.Size = new System.Drawing.Size(436, 92);
-            groupeffect.TabIndex = 1;
-            groupeffect.TabStop = false;
-            groupeffect.Text = "Effect and identification";
+            this.groupeffect.BackColor = System.Drawing.Color.Transparent;
+            this.groupeffect.Controls.Add(this.browseeffect);
+            this.groupeffect.Controls.Add(this.effect);
+            this.groupeffect.Controls.Add(this.label8);
+            this.groupeffect.Controls.Add(this.tagSelector);
+            this.groupeffect.Location = new System.Drawing.Point(4, 223);
+            this.groupeffect.Name = "groupeffect";
+            this.groupeffect.Size = new System.Drawing.Size(436, 92);
+            this.groupeffect.TabIndex = 1;
+            this.groupeffect.TabStop = false;
+            this.groupeffect.Text = "Effect and identification";
             // 
             // browseeffect
             // 
@@ -376,12 +365,12 @@
             // 
             // label8
             // 
-            label8.AutoSize = true;
-            label8.Location = new System.Drawing.Point(12, 31);
-            label8.Name = "label8";
-            label8.Size = new System.Drawing.Size(45, 13);
-            label8.TabIndex = 0;
-            label8.Text = "Special:";
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 31);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(45, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Special:";
             // 
             // tagSelector
             // 
@@ -423,8 +412,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.panel1.Controls.Add(groupfloorceiling);
-            this.panel1.Controls.Add(groupeffect);
+            this.panel1.Controls.Add(this.groupfloorceiling);
+            this.panel1.Controls.Add(this.groupeffect);
             this.panel1.Location = new System.Drawing.Point(12, 10);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(443, 320);
@@ -442,8 +431,8 @@
             // 
             // flags
             // 
-            this.flags.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.flags.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flags.AutoScroll = true;
             this.flags.Columns = 2;
@@ -474,10 +463,10 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Sector";
             this.HelpRequested += new System.Windows.Forms.HelpEventHandler(this.SectorEditFormPSX_HelpRequested);
-            groupfloorceiling.ResumeLayout(false);
-            groupfloorceiling.PerformLayout();
-            groupeffect.ResumeLayout(false);
-            groupeffect.PerformLayout();
+            this.groupfloorceiling.ResumeLayout(false);
+            this.groupfloorceiling.PerformLayout();
+            this.groupeffect.ResumeLayout(false);
+            this.groupeffect.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -506,5 +495,16 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox3;
         private Controls.CheckboxArrayControl flags;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.GroupBox groupfloorceiling;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.GroupBox groupeffect;
+        private System.Windows.Forms.Label label8;
     }
 }
