@@ -264,8 +264,9 @@ float4 doPsxDoomShading(float4 texColor, float4 sectorColor, float lightLevel, f
 	colorMul = min(colorMul, 255.0 / 128.0);
 
 	// Make sure the input texture only uses 5-bit color to simulate the PlayStation's limitations.
-	// It might be the case that the user is using 8-bit color (preview) textures to edit the level, which will later be converted to 5-bit.
-	// This code assumes the user's tools would do some sort of rounding to 5-bit for the PSX assets, which is probably a reasonable assumption.
+	// It might be the case that the user is using 8-bit color (preview) textures to edit the level, which will later be
+	// converted to the PlayStation's palette, which has 5-bit source color components. This truncation is an estimation
+	// of how all these conversions might look...
 	texColor.rgb *= 31;
 	texColor.rgb = round(texColor.rgb);
 	texColor.rgb /= 31;
