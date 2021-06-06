@@ -183,10 +183,9 @@ namespace CodeImp.DoomBuilder.Windows
                 //mxd. Store initial properties
                 sectorprops.Add(new SectorProperties(s));
 
-                // Apply new color
-                Lights Col = new Lights();//[GEC]
-                PixelColor rgb = Col.GetLights(s.IdxColor);
-                PixelColor rgbCeil = Col.GetLights(s.IdxColorCeil);
+                // [GEC] Apply new color
+                PixelColor rgb = Lights.GetColor(s.IdxColor);
+                PixelColor rgbCeil = Lights.GetColor(s.IdxColorCeil);
                 pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
                 pnlSectorColorCeil.BackColor = Color.FromArgb(rgbCeil.r, rgbCeil.g, rgbCeil.b);
             }
@@ -538,7 +537,6 @@ namespace CodeImp.DoomBuilder.Windows
             if (preventchanges) return;
             MakeUndo(); //mxd
             int i = 0;
-            Lights Col = new Lights();//[GEC]
 
             //restore values
             if (string.IsNullOrEmpty(idxcolor.Text))
@@ -547,7 +545,7 @@ namespace CodeImp.DoomBuilder.Windows
                 {
                     s.IdxColor = sectorprops[i++].IdxColor;
                     // Apply new color
-                    PixelColor rgb = Col.GetLights(s.IdxColor);
+                    PixelColor rgb = Lights.GetColor(s.IdxColor);
                     pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
                 }
 
@@ -558,7 +556,7 @@ namespace CodeImp.DoomBuilder.Windows
                 {
                     s.IdxColor = General.Clamp(idxcolor.GetResult(sectorprops[i++].IdxColor), 0, 255);
                     // Apply new color
-                    PixelColor rgb = Col.GetLights(s.IdxColor);
+                    PixelColor rgb = Lights.GetColor(s.IdxColor);
                     pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
                 }
             }
@@ -572,7 +570,6 @@ namespace CodeImp.DoomBuilder.Windows
             if (preventchanges) return;
             MakeUndo(); //mxd
             int i = 0;
-            Lights Col = new Lights();//[GEC]
 
             //restore values
             if (string.IsNullOrEmpty(idxcolorCeil.Text))
@@ -581,7 +578,7 @@ namespace CodeImp.DoomBuilder.Windows
                 {
                     s.IdxColorCeil = sectorprops[i++].IdxColorCeil;
                     // Apply new color
-                    PixelColor rgb = Col.GetLights(s.IdxColorCeil);
+                    PixelColor rgb = Lights.GetColor(s.IdxColorCeil);
                     pnlSectorColorCeil.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
                 }
 
@@ -592,7 +589,7 @@ namespace CodeImp.DoomBuilder.Windows
                 {
                     s.IdxColorCeil = General.Clamp(idxcolorCeil.GetResult(sectorprops[i++].IdxColorCeil), 0, 255);
                     // Apply new color
-                    PixelColor rgb = Col.GetLights(s.IdxColorCeil);
+                    PixelColor rgb = Lights.GetColor(s.IdxColorCeil);
                     pnlSectorColorCeil.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);//frm.Color;
                 }
             }
@@ -608,10 +605,9 @@ namespace CodeImp.DoomBuilder.Windows
 
             if (frm.ShowDialog(this.ParentForm) == DialogResult.OK)
             {
-                // Apply new color
-                Lights Col = new Lights();//[GEC]
-                PixelColor rgb = Col.GetLights(frm.IindexCol);
-                idxcolor.Text = frm.IdxCol.ToString();//[GEC]
+                // [GEC] Apply new color
+                PixelColor rgb = Lights.GetColor(frm.IindexCol);
+                idxcolor.Text = frm.IdxCol.ToString();
                 pnlSectorColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
             }
         }
@@ -623,10 +619,9 @@ namespace CodeImp.DoomBuilder.Windows
 
             if (frm.ShowDialog(this.ParentForm) == DialogResult.OK)
             {
-                // Apply new color
-                Lights Col = new Lights();//[GEC]
-                PixelColor rgb = Col.GetLights(frm.IindexCol);
-                idxcolorCeil.Text = frm.IdxCol.ToString();//[GEC]
+                // [GEC] Apply new color
+                PixelColor rgb = Lights.GetColor(frm.IindexCol);
+                idxcolorCeil.Text = frm.IdxCol.ToString();
                 pnlSectorColorCeil.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
             }
         }

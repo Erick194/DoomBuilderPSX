@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using CodeImp.DoomBuilder.Map;
+﻿using CodeImp.DoomBuilder.Map;
 using CodeImp.DoomBuilder.Rendering;
+using System;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace CodeImp.DoomBuilder.Windows
 {
@@ -23,8 +18,7 @@ namespace CodeImp.DoomBuilder.Windows
 
         private void LightColors_Load(object sender, EventArgs e)
         {
-            Lights Col = new Lights();//[GEC]
-            PixelColor rgb = Col.GetLights(0);
+            PixelColor rgb = Lights.GetColor(0); // [GEC]
 
             int index = 0;
             for (index = 0; index < 256; index++)//set color on boxes
@@ -33,7 +27,7 @@ namespace CodeImp.DoomBuilder.Windows
                 {
                     if (control.TabIndex == index)
                     {
-                        rgb = Col.GetLights(index);
+                        rgb = Lights.GetColor(index); // [GEC]
                         control.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
                         control.Click += new System.EventHandler(this.Box_Click);
                         control.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -48,7 +42,7 @@ namespace CodeImp.DoomBuilder.Windows
                 if (control.TabIndex == IindexCol)
                 {
                     ColorIndex.Text = IdxCol.ToString();
-                    rgb = Col.GetLights(IindexCol);
+                    rgb = Lights.GetColor(IindexCol); // [GEC]
                     panel257.Location = new System.Drawing.Point(control.Location.X + 2, control.Location.Y + 2);
                     panel257.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
                     break;
@@ -61,8 +55,7 @@ namespace CodeImp.DoomBuilder.Windows
             panel256.BackColor = Color.FromArgb(255, 255, 0);
             Control control = (Control)sender;
 
-            Lights Col = new Lights();//[GEC]
-            PixelColor rgb = Col.GetLights(control.TabIndex);
+            PixelColor rgb = Lights.GetColor(control.TabIndex); // [GEC]
             panel256.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
 
             //update color

@@ -361,14 +361,13 @@ namespace CodeImp.DoomBuilder.Controls
                     ColorIndex.Visible = true;  // [GEC]
                     ColorIndexCeil.Visible = true;  // [GEC]
 
-                    Lights Col = new Lights();
-                    PixelColor rgb = Col.GetLights(0);
-                    PixelColor rgbCeil = Col.GetLights(0);
+                    PixelColor rgb = Lights.GetColor(0);
+                    PixelColor rgbCeil = Lights.GetColor(0);
 
                     if (s.IdxColor != 0)
                     {
                         ColorIndex.Text = s.IdxColor.ToString();
-                        rgb = Col.GetLights(s.IdxColor);
+                        rgb = Lights.GetColor(s.IdxColor);
                         panelIndexColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
                         labelIndexColor.Enabled = true;
                         panelIndexColor.Enabled = true;
@@ -386,7 +385,7 @@ namespace CodeImp.DoomBuilder.Controls
                     if (s.IdxColorCeil != 0)
                     {
                         ColorIndexCeil.Text = s.IdxColorCeil.ToString();
-                        rgbCeil = Col.GetLights(s.IdxColorCeil);
+                        rgbCeil = Lights.GetColor(s.IdxColorCeil);
                         panelIndexColorCeil.BackColor = Color.FromArgb(rgbCeil.r, rgbCeil.g, rgbCeil.b);
                         labelIndexColorCeil.Enabled = true;
                         panelIndexColorCeil.Enabled = true;

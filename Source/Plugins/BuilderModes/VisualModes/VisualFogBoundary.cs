@@ -97,7 +97,10 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
 			// Calculate fog density
 			fogfactor = CalculateFogFactor(lightlevel);
-			poly.color = PixelColor.INT_WHITE;
+			poly.lowerColor = PixelColor.FromInt(PixelColor.INT_WHITE); // [GEC]
+			poly.upperColor = poly.lowerColor; // [GEC]
+			poly.lowerColorZ = Sidedef.Sector.FloorHeight; // [GEC]
+			poly.upperColorZ = Sidedef.Sector.CeilHeight; // [GEC]
 
 			// Cut off the part below the other floor and above the other ceiling
 			CropPoly(ref poly, osd.Ceiling.plane, true);

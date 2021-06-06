@@ -391,8 +391,7 @@ namespace CodeImp.DoomBuilder.Map
 
                 if (General.Map.PSXDOOM)//[GEC] Set Color On 2D View
                 {
-                    Lights col = new Lights();
-                    brightint = PixelColor.Modulate(PixelColor.FromInt(brightint), col.GetLights(idxcolor)).WithAlpha(255).ToInt();
+                    brightint = PixelColor.Modulate(PixelColor.FromInt(brightint), Lights.GetColor(idxcolor)).WithAlpha(255).ToInt();
                 }
 
                 // Make vertices

@@ -313,8 +313,16 @@ namespace CodeImp.DoomBuilder.BuilderModes
                         // [ZZ] if sector is using Doom64 lighting, apply thing color here.
                         sectorcolor = PixelColor.Modulate(sd.ColorSprites, areacolor).WithAlpha(alpha).ToInt();
 
-                        Lights col = new Lights();//[GEC]
-                        sectorcolor = PixelColor.Modulate(PixelColor.FromInt(sectorcolor), col.GetLights(level.sector.IdxColor)).WithAlpha(alpha).ToInt();
+						// [GEC] Dual colored lighting calculations
+						Sector sector = level.sector;
+						int idxColorCeil = (sector.IdxColorCeil != 0) ? sector.IdxColorCeil : sector.IdxColor;
+
+						{
+							PixelColor floorCol = Lights.GetColor(sector.IdxColor);
+							PixelColor ceilCol = Lights.GetColor(idxColorCeil);
+							PixelColor psxSectorCol = WallPolygon.GetColorForZ(Thing.Position.z, floorCol, ceilCol, sector.FloorHeight, sector.CeilHeight);
+							sectorcolor = PixelColor.Modulate(PixelColor.FromInt(sectorcolor), psxSectorCol).WithAlpha(alpha).ToInt();
+						}
 
                         //mxd. Calculate fogfactor
                         fogfactor = VisualGeometry.CalculateFogFactor(level.sector, brightness);

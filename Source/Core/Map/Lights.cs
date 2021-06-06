@@ -13,48 +13,14 @@
 
 #endregion
 
-#region ================== Namespaces
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
-using System.Collections.ObjectModel;
-using CodeImp.DoomBuilder.IO;
-using CodeImp.DoomBuilder.Geometry;
 using CodeImp.DoomBuilder.Rendering;
-using SlimDX.Direct3D9;
-using SlimDX;
-#endregion
 
 namespace CodeImp.DoomBuilder.Map
 {
-    public struct Lights
+    public static class Lights
     {
-        #region ================== Constants
-        #endregion
-
-        #region ================== Variables
-
-        // Properties
-        //private PixelColor[] colors;
-
-        #endregion
-
-        /*#region ================== Properties
-
-        public PixelColor this[int index] { get { return colors[index]; } }
-
-        #endregion*/
-
-        #region ================== Constructor / Disposer
-
-        public PixelColor GetLights(int index)
+        static readonly byte[] LIGHTS_DATA = new byte[]
         {
-            if (index == 0)
-                return new PixelColor(255, 255, 255, 255);
-
-            byte[] Lightmap = new byte[] {
             0xff, 0xff, 0xff, 0xD8, 0xDE, 0xE7, 0xC9, 0xD9, 0xE0, 0xBA, 0xD3, 0xDA,
             0xAB, 0xCE, 0xD3, 0x9B, 0xC8, 0xCD, 0x8C, 0xC3, 0xC6, 0x7D, 0xBD, 0xC0,
             0x6E, 0xB8, 0xB9, 0x5F, 0xB2, 0xB2, 0x50, 0xAD, 0xAC, 0x41, 0xA7, 0xA5,
@@ -118,16 +84,20 @@ namespace CodeImp.DoomBuilder.Map
             0x2A, 0x2F, 0x6B, 0x2C, 0x2C, 0x68, 0x2F, 0x28, 0x66, 0x30, 0x23, 0x62,
             0x31, 0x1F, 0x5D, 0x31, 0x1A, 0x59, 0x32, 0x15, 0x55, 0x33, 0x10, 0x50,
             0x34, 0x0C, 0x4C, 0x34, 0x07, 0x47, 0x35, 0x02, 0x43, 0x00, 0x00, 0x00,
-            0x8C, 0xB3, 0x8C, 0x05, 0x42, 0x94, 0xFF, 0xCD, 0x5A, 0xC9, 0x04, 0x04};
+            0x8C, 0xB3, 0x8C, 0x05, 0x42, 0x94, 0xFF, 0xCD, 0x5A, 0xC9, 0x04, 0x04
+        };
 
-            return new PixelColor(255, Lightmap[(index * 3)], Lightmap[(index * 3) + 1], Lightmap[(index * 3) + 2]);
+        public static PixelColor GetColor(int lightIdx)
+        {
+            if (lightIdx == 0)
+                return new PixelColor(255, 255, 255, 255);
+
+            return new PixelColor(
+                255,
+                LIGHTS_DATA[(lightIdx * 3)],
+                LIGHTS_DATA[(lightIdx * 3) + 1],
+                LIGHTS_DATA[(lightIdx * 3) + 2]
+            );
         }
-
-        #endregion
-
-        #region ================== Methods
-
-        #endregion
-
     }
 }
