@@ -312,7 +312,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 base.lightmode = 1;
             }
 
-			poly.SetupDualColoredLighting(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
+			poly.SetShadingParams(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
 
             // Cut off the part below the other ceiling
             CropPoly(ref poly, osd.Ceiling.plane, false);

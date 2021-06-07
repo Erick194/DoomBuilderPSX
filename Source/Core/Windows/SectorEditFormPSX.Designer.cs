@@ -435,7 +435,7 @@
             // apply
             // 
             this.apply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.apply.Location = new System.Drawing.Point(225, 415);
+            this.apply.Location = new System.Drawing.Point(225, 445);
             this.apply.Name = "apply";
             this.apply.Size = new System.Drawing.Size(112, 25);
             this.apply.TabIndex = 1;
@@ -447,7 +447,7 @@
             // 
             this.cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel.Location = new System.Drawing.Point(343, 415);
+            this.cancel.Location = new System.Drawing.Point(343, 445);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(112, 25);
             this.cancel.TabIndex = 2;
@@ -470,7 +470,7 @@
             this.groupBox3.Controls.Add(this.flags);
             this.groupBox3.Location = new System.Drawing.Point(12, 336);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(443, 73);
+            this.groupBox3.Size = new System.Drawing.Size(443, 103);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = " Flags ";
@@ -484,7 +484,7 @@
             this.flags.Columns = 2;
             this.flags.Location = new System.Drawing.Point(15, 21);
             this.flags.Name = "flags";
-            this.flags.Size = new System.Drawing.Size(422, 46);
+            this.flags.Size = new System.Drawing.Size(422, 76);
             this.flags.TabIndex = 0;
             this.flags.VerticalSpacing = 1;
             // 
@@ -494,7 +494,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.CancelButton = this.cancel;
-            this.ClientSize = new System.Drawing.Size(466, 451);
+            this.ClientSize = new System.Drawing.Size(466, 481);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.cancel);

@@ -217,10 +217,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 								if(l.type == SectorLevelType.Glow)
 								{
 									// mxd. Glow levels should not affect light level
-									np.lowerColor = p.lowerColor; // [GEC]
-									np.upperColor = p.upperColor; // [GEC]
-									np.lowerColorZ = p.lowerColorZ; // [GEC]
-									np.upperColorZ = p.upperColorZ; // [GEC]
+									np.shadeParams = p.shadeParams; // [GEC]
 								}
 								else
 								{
@@ -235,10 +232,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 										lightlevel = l.brightnessbelow;
 
 									PixelColor wallbrightness = PixelColor.FromInt(mode.CalculateBrightness(lightlevel, Sidedef)); //mxd
-									np.lowerColor = PixelColor.Modulate(l.colorbelow, wallbrightness).WithAlpha(255); // [GEC]
-									np.upperColor = np.lowerColor; // [GEC]
-									np.lowerColorZ = p.lowerColorZ; // [GEC]
-									np.upperColorZ = p.upperColorZ; // [GEC]
+									np.SetShadingParams(l.sector, PixelColor.Modulate(l.colorbelow, wallbrightness).WithAlpha(255)); // [GEC]
 								}
 
 								if(p.Count == 0)
@@ -279,9 +273,9 @@ namespace CodeImp.DoomBuilder.BuilderModes
 						Vector3D p1 = p[0];	// [GEC]
 						Vector3D p2 = p[k];
 						Vector3D p3 = p[k + 1];
-						int c1 = WallPolygon.GetColorForZ(p1.z, p).ToInt();
-						int c2 = WallPolygon.GetColorForZ(p2.z, p).ToInt();
-						int c3 = WallPolygon.GetColorForZ(p3.z, p).ToInt();
+						int c1 = p.GetColorForZ(p1.z).ToInt();
+						int c2 = p.GetColorForZ(p2.z).ToInt();
+						int c3 = p.GetColorForZ(p3.z).ToInt();
 
 						verts.Add(new WorldVertex(p1, c1, texc[0]));
 						verts.Add(new WorldVertex(p2, c2, texc[k]));

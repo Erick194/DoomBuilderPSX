@@ -275,7 +275,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                     base.lightmode = 1;
                 }
 
-				poly.SetupDualColoredLighting(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
+				poly.SetShadingParams(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
 
                 // Cut out pieces that overlap 3D floors in this sector
                 List<WallPolygon> polygons = new List<WallPolygon> { poly };

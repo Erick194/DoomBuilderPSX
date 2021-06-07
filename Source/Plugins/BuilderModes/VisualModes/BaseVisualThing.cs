@@ -315,12 +315,11 @@ namespace CodeImp.DoomBuilder.BuilderModes
 
 						// [GEC] Dual colored lighting calculations
 						Sector sector = level.sector;
-						int idxColorCeil = (sector.IdxColorCeil != 0) ? sector.IdxColorCeil : sector.IdxColor;
-
+						
 						{
-							PixelColor floorCol = Lights.GetColor(sector.IdxColor);
-							PixelColor ceilCol = Lights.GetColor(idxColorCeil);
-							PixelColor psxSectorCol = WallPolygon.GetColorForZ(Thing.Position.z, floorCol, ceilCol, sector.FloorHeight, sector.CeilHeight);
+							Lights.ShadingParams shadeParams;
+							Lights.ComputeShadingParams(sector, PixelColor.FromInt(sectorcolor), out shadeParams);
+							PixelColor psxSectorCol = Lights.GetColorForZ(Thing.Position.z, shadeParams);
 							sectorcolor = PixelColor.Modulate(PixelColor.FromInt(sectorcolor), psxSectorCol).WithAlpha(alpha).ToInt();
 						}
 

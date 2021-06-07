@@ -14,11 +14,22 @@
 #endregion
 
 using CodeImp.DoomBuilder.Rendering;
+using System;
 
 namespace CodeImp.DoomBuilder.Map
 {
     public static class Lights
     {
+        // [GEC] DC: the lower and upper colors for the wall polygon and the z values at which does colors are applied.
+        // These values are used to compute the color for a vertex depending on it's height with two colored lighting.
+        public struct ShadingParams
+        {
+            public PixelColor lowerColor;
+            public PixelColor upperColor;
+            public float lowerColorZ;
+            public float upperColorZ;
+        }
+
         static readonly byte[] LIGHTS_DATA = new byte[]
         {
             0xff, 0xff, 0xff, 0xD8, 0xDE, 0xE7, 0xC9, 0xD9, 0xE0, 0xBA, 0xD3, 0xDA,
@@ -98,6 +109,93 @@ namespace CodeImp.DoomBuilder.Map
                 LIGHTS_DATA[(lightIdx * 3) + 1],
                 LIGHTS_DATA[(lightIdx * 3) + 2]
             );
+        }
+
+        // [GEC] DC: A helper function that computes the shading parameters used for dual colored lighting given a sector and specified base color.
+        // Sets the lower and upper colors and the z values at which those colors apply (for interpolation purposes).
+        public static void ComputeShadingParams(Sector sector, PixelColor baseColor, out ShadingParams shadeParams)
+        {
+            // Basic floor/ceiling z values for shading
+            shadeParams.lowerColorZ = sector.FloorHeight;
+            shadeParams.upperColorZ = sector.CeilHeight;
+
+            // Set the lower and upper colors.
+            // Note: if the upper color is undefined, use the lower color as the upper color and early out.
+            shadeParams.lowerColor = PixelColor.Modulate(baseColor, GetColor(sector.IdxColor)).WithAlpha(255);
+            int ceilColorIdx = sector.IdxColorCeil;
+
+            if (ceilColorIdx == 0)
+            {
+                shadeParams.upperColor = shadeParams.lowerColor;
+                return;
+            }
+
+            shadeParams.upperColor = PixelColor.Modulate(baseColor, GetColor(ceilColorIdx)).WithAlpha(255);
+
+            // Get the flags encoding how to adjust the gradient.
+            // This is not the most efficient (or elegant) way of looking up these flags but probably fine for the purposes of an editor.
+            bool bContractGradient = sector.IsFlagSet("4");
+            bool bFloorGradPlus1 = sector.IsFlagSet("8");
+            bool bFloorGradPlus2 = sector.IsFlagSet("16");
+            bool bCeilGradPlus1 = sector.IsFlagSet("32");
+            bool bCeilGradPlus2 = sector.IsFlagSet("64");
+
+            // Adjust the floor/ceiling z values for the purposes of shading (if adjustments are specified)
+            float sectorHeight = Math.Max(shadeParams.upperColorZ - shadeParams.lowerColorZ, 0);
+            int floorGradShift = (bFloorGradPlus1 ? 1 : 0) + (bFloorGradPlus2 ? 2 : 0);
+            int ceilGradShift = (bCeilGradPlus1 ? 1 : 0) + (bCeilGradPlus2 ? 2 : 0);
+
+            if (bContractGradient)
+            {
+                switch (floorGradShift)
+                {
+                    case 1: shadeParams.lowerColorZ += sectorHeight * 0.25f; break;
+                    case 2: shadeParams.lowerColorZ += sectorHeight * 0.50f; break;
+                    case 3: shadeParams.lowerColorZ += sectorHeight * 0.75f; break;
+                }
+
+                switch (ceilGradShift)
+                {
+                    case 1: shadeParams.upperColorZ -= sectorHeight * 0.25f; break;
+                    case 2: shadeParams.upperColorZ -= sectorHeight * 0.50f; break;
+                    case 3: shadeParams.upperColorZ -= sectorHeight * 0.75f; break;
+                }
+            }
+            else
+            {
+                switch (floorGradShift)
+                {
+                    case 1: shadeParams.lowerColorZ -= sectorHeight * 0.5f; break;
+                    case 2: shadeParams.lowerColorZ -= sectorHeight * 1.0f; break;
+                    case 3: shadeParams.lowerColorZ -= sectorHeight * 2.0f; break;
+                }
+
+                switch (ceilGradShift)
+                {
+                    case 1: shadeParams.upperColorZ += sectorHeight * 0.5f; break;
+                    case 2: shadeParams.upperColorZ += sectorHeight * 1.0f; break;
+                    case 3: shadeParams.upperColorZ += sectorHeight * 2.0f; break;
+                }
+            }
+        }
+
+        // [GEC] DC: dual color lighting calculation.
+        // Gets the color to use for the given Z (height) value and dual colored lighting params.
+        public static PixelColor GetColorForZ(float z, ShadingParams shadeParams)
+        {
+            // Same color? If so then don't do any interpolation:
+            if (shadeParams.lowerColor.Equals(shadeParams.upperColor))
+                return shadeParams.lowerColor;
+
+            // If there is zero or invalid sized z range then just return the floor color
+            float zRange = shadeParams.upperColorZ - shadeParams.lowerColorZ;
+
+            if (zRange <= 0.0f)
+                return shadeParams.lowerColor;
+
+            // Interpolate between the two colors based on z
+            float t = (z - shadeParams.lowerColorZ) / zRange;
+            return PixelColor.Lerp(shadeParams.lowerColor, shadeParams.upperColor, t);
         }
     }
 }

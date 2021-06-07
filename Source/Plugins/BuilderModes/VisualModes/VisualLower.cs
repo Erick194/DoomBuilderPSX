@@ -332,7 +332,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 base.lightmode = 1;
             }
 
-			poly.SetupDualColoredLighting(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
+			poly.SetShadingParams(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
 
             // Cut off the part above the other floor
             CropPoly(ref poly, osd.Floor.plane, false);
