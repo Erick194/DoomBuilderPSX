@@ -353,13 +353,15 @@ namespace CodeImp.DoomBuilder.Controls
             {
                 if (s.Fields != null)
                 {
+                    bool useDualColoredLighting = General.Map.Config.PSXDOOM_DCLIGHTS;
+
                     //sector colors
                     labelIndexColor.Visible = true; // [GEC]
-                    labelIndexColorCeil.Visible = true; // [GEC]
+                    labelIndexColorCeil.Visible = useDualColoredLighting; // [GEC]
                     panelIndexColor.Visible = true; // [GEC]
-                    panelIndexColorCeil.Visible = true; // [GEC]
+                    panelIndexColorCeil.Visible = useDualColoredLighting; // [GEC]
                     ColorIndex.Visible = true;  // [GEC]
-                    ColorIndexCeil.Visible = true;  // [GEC]
+                    ColorIndexCeil.Visible = useDualColoredLighting;  // [GEC]
 
                     PixelColor rgb = Lights.GetColor(0);
                     PixelColor rgbCeil = Lights.GetColor(0);

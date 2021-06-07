@@ -190,6 +190,13 @@ namespace CodeImp.DoomBuilder.Windows
                 pnlSectorColorCeil.BackColor = Color.FromArgb(rgbCeil.r, rgbCeil.g, rgbCeil.b);
             }
 
+            // Enable or disable the ceiling color setting depending on whether dual colored lighting is allowed
+            bool useDualColoredLighting = General.Map.Config.PSXDOOM_DCLIGHTS;
+
+            this.pnlSectorColorCeil.Visible = useDualColoredLighting;
+            this.idxcolorCeil.Visible = useDualColoredLighting;
+            this.lblSectorColorCeil.Visible = useDualColoredLighting;
+
             // Show sector height
             UpdateSectorHeight();
 

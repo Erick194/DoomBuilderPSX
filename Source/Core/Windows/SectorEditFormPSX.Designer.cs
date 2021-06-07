@@ -33,7 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.groupfloorceiling = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lblSectorColorCeil = new System.Windows.Forms.Label();
             this.pnlSectorColor = new System.Windows.Forms.Panel();
             this.pnlSectorColorCeil = new System.Windows.Forms.Panel();
             this.idxcolor = new CodeImp.DoomBuilder.Controls.ButtonsNumericTextbox();
@@ -91,7 +91,7 @@
             // 
             this.groupfloorceiling.BackColor = System.Drawing.Color.Transparent;
             this.groupfloorceiling.Controls.Add(this.label10);
-            this.groupfloorceiling.Controls.Add(this.label11);
+            this.groupfloorceiling.Controls.Add(this.lblSectorColorCeil);
             this.groupfloorceiling.Controls.Add(this.pnlSectorColor);
             this.groupfloorceiling.Controls.Add(this.pnlSectorColorCeil);
             this.groupfloorceiling.Controls.Add(this.idxcolor);
@@ -127,15 +127,15 @@
             this.label10.Text = "Sector color by index:";
             this.label10.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // label11
+            // lblSectorColorCeil
             // 
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(234, 181);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(76, 27);
-            this.label11.TabIndex = 31;
-            this.label11.Text = "Ceiling sector color by index:";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.lblSectorColorCeil.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSectorColorCeil.Location = new System.Drawing.Point(234, 181);
+            this.lblSectorColorCeil.Name = "lblSectorColorCeil";
+            this.lblSectorColorCeil.Size = new System.Drawing.Size(76, 27);
+            this.lblSectorColorCeil.TabIndex = 31;
+            this.lblSectorColorCeil.Text = "Ceiling sector color by index:";
+            this.lblSectorColorCeil.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // pnlSectorColor
             // 
@@ -553,7 +553,7 @@
         private System.Windows.Forms.GroupBox groupeffect;
         private System.Windows.Forms.Label label8;
         private Controls.ButtonsNumericTextbox idxcolorCeil;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lblSectorColorCeil;
         private System.Windows.Forms.Panel pnlSectorColorCeil;
     }
 }

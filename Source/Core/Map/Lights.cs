@@ -120,11 +120,11 @@ namespace CodeImp.DoomBuilder.Map
             shadeParams.upperColorZ = sector.CeilHeight;
 
             // Set the lower and upper colors.
-            // Note: if the upper color is undefined, use the lower color as the upper color and early out.
+            // Note: if the upper color is undefined (or dual colored lighting disabled), use the lower color as the upper color and early out.
             shadeParams.lowerColor = PixelColor.Modulate(baseColor, GetColor(sector.IdxColor)).WithAlpha(255);
             int ceilColorIdx = sector.IdxColorCeil;
 
-            if (ceilColorIdx == 0)
+            if ((ceilColorIdx == 0) || (!General.Map.Config.PSXDOOM_DCLIGHTS))
             {
                 shadeParams.upperColor = shadeParams.lowerColor;
                 return;
