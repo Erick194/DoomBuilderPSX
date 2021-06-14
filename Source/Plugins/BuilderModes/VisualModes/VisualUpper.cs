@@ -305,15 +305,14 @@ namespace CodeImp.DoomBuilder.BuilderModes
             PixelColor wallbrightness = PixelColor.FromInt(mode.CalculateBrightness(lightlevel, Sidedef));
 			PixelColor wallcolor = PixelColor.Modulate(sd.Ceiling.colorbelow, wallbrightness);
 			fogfactor = CalculateFogFactor(lightlevel);
+
             if (General.Map.PSXDOOM)//[GEC]
             {
                 fogfactor = CalculateFogFactor(255);
                 base.lightmode = 1;
             }
-            poly.color = wallcolor.WithAlpha(255).ToInt();
 
-            Lights col = new Lights();//[GEC]
-            poly.color = PixelColor.Modulate(PixelColor.FromInt(poly.color), col.GetLights(Sidedef.Sector.IdxColor)).WithAlpha(255).ToInt();
+			poly.SetShadingParams(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
 
             // Cut off the part below the other ceiling
             CropPoly(ref poly, osd.Ceiling.plane, false);

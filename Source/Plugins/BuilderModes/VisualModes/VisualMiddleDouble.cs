@@ -385,10 +385,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
                 base.lightmode = 1;
             }
 
-            poly.color = wallcolor.WithAlpha(255).ToInt();
-
-            Lights col = new Lights();//[GEC]
-            poly.color = PixelColor.Modulate(PixelColor.FromInt(poly.color), col.GetLights(Sidedef.Sector.IdxColor)).WithAlpha(255).ToInt();
+            poly.SetShadingParams(Sidedef.Sector, wallcolor.WithAlpha(255)); // [GEC]
 
             // Cut off the part below the other floor and above the other ceiling
             if (General.Map.PSXDOOM)

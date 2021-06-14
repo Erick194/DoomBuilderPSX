@@ -92,6 +92,7 @@ namespace CodeImp.DoomBuilder.Config
 		private readonly bool localsidedeftextureoffsets; //MaxW
 		private readonly bool showtexturestretched; //[GEC]
 		private readonly bool ignorefloorskytexture; //[GEC]
+		private readonly bool enablepsxdualcolorlighting; //[GEC]
 
 		// Skills
 		private readonly List<SkillInfo> skills;
@@ -244,7 +245,7 @@ namespace CodeImp.DoomBuilder.Config
         public bool PSXDOOM { get { return psxdoommapformat; } }//[GEC]
 		public bool PSXDOOMTS { get { return showtexturestretched; } }//[GEC]
 		public bool PSXDOOM_IFST { get { return ignorefloorskytexture; } }//[GEC]
-		
+		public bool PSXDOOM_DCLIGHTS { get { return enablepsxdualcolorlighting; } }//[GEC]
 
 		public bool UseLocalSidedefTextureOffsets { get { return localsidedeftextureoffsets; } } //MaxW
 
@@ -421,7 +422,7 @@ namespace CodeImp.DoomBuilder.Config
             psxdoommapformat = (formatinterface == "PSXDoomMapSetIO");//[GEC]
 			showtexturestretched = cfg.ReadSetting("showtexturestretched", false);//[GEC]
 			ignorefloorskytexture = cfg.ReadSetting("ignorefloorskytexture", false);//[GEC]
-			
+			enablepsxdualcolorlighting = cfg.ReadSetting("enablepsxdualcolorlighting", false);//[GEC]
 
 			//mxd. Texture names length
 			longtexturenames = cfg.ReadSetting("longtexturenames", false);

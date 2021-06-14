@@ -69,6 +69,7 @@ namespace CodeImp.DoomBuilder.Map
 		private List<int> tags; //mxd
 		private int brightness;
         private int idxcolor;//[GEC]
+		private int idxcolorCeil;//[GEC] (ceiling color, if using Doom64 style 2 color lighting)
 
         //mxd. UDMF properties
         private Dictionary<string, bool> flags;
@@ -119,6 +120,7 @@ namespace CodeImp.DoomBuilder.Map
 		public List<int> Tags { get { return tags; } set { BeforePropsChange(); tags = value; } } //mxd
 		public int Brightness { get { return brightness; } set { BeforePropsChange(); brightness = value; updateneeded = true; } }
         public int IdxColor { get { return idxcolor; } set { BeforePropsChange(); idxcolor = value; updateneeded = true; } }//[GEC]
+		public int IdxColorCeil { get { return idxcolorCeil; } set { BeforePropsChange(); idxcolorCeil = value; updateneeded = true; } }//[GEC]
         public bool UpdateNeeded { get { return updateneeded; } set { updateneeded |= value; triangulationneeded |= value; } }
 		public RectangleF BBox { get { return bbox; } }
 		internal Sector Clone { get { return clone; } set { clone = value; } }
@@ -161,6 +163,7 @@ namespace CodeImp.DoomBuilder.Map
 			this.triangles = new Triangulation(); //mxd
 			this.surfaceentries = new SurfaceEntryCollection();
             this.idxcolor = 0;//[GEC]
+			this.idxcolorCeil = 0;//[GEC]
 
             if (map == General.Map.Map)
 				General.Map.UndoRedo.RecAddSector(this);
@@ -265,6 +268,7 @@ namespace CodeImp.DoomBuilder.Map
 			s.rwInt(ref effect);
 			s.rwInt(ref brightness);
             s.rwInt(ref idxcolor);//[GEC]
+			s.rwInt(ref idxcolorCeil);//[GEC]
 
             //mxd. (Re)store tags
             if (s.IsWriting) 
@@ -317,6 +321,7 @@ namespace CodeImp.DoomBuilder.Map
 			s.flags = new Dictionary<string, bool>(flags); //mxd
 			s.brightness = brightness;
             s.idxcolor = idxcolor;//[GEC]
+			s.idxcolorCeil = idxcolorCeil;//[GEC]
             s.flooroffset = flooroffset; //mxd
 			s.floorslope = floorslope; //mxd
 			s.ceiloffset = ceiloffset; //mxd
@@ -386,8 +391,7 @@ namespace CodeImp.DoomBuilder.Map
 
                 if (General.Map.PSXDOOM)//[GEC] Set Color On 2D View
                 {
-                    Lights col = new Lights();
-                    brightint = PixelColor.Modulate(PixelColor.FromInt(brightint), col.GetLights(idxcolor)).WithAlpha(255).ToInt();
+                    brightint = PixelColor.Modulate(PixelColor.FromInt(brightint), Lights.GetColor(idxcolor)).WithAlpha(255).ToInt();
                 }
 
                 // Make vertices
@@ -824,17 +828,17 @@ namespace CodeImp.DoomBuilder.Map
 		//mxd. This updates all properties (Doom/Hexen version)
 		public void Update(int hfloor, int hceil, string tfloor, string tceil, int effect, int tag, int brightness) 
 		{
-			Update(hfloor, hceil, tfloor, tceil, effect, new Dictionary<string, bool>(StringComparer.Ordinal), new List<int> { tag }, brightness, 0, new Vector3D(), 0, new Vector3D(), 0);//[GEC]
+			Update(hfloor, hceil, tfloor, tceil, effect, new Dictionary<string, bool>(StringComparer.Ordinal), new List<int> { tag }, brightness, 0, new Vector3D(), 0, new Vector3D(), 0, 0);//[GEC]
         }
 
-        //mxd. This updates all properties (Doom/Hexen version)
-        public void UpdatePsx(int hfloor, int hceil, string tfloor, string tceil, int effect, Dictionary<string, bool> flags, int tag, int brightness, int idxcolor) //[GEC]
+        //mxd. This updates all properties (PSX version, GEC)
+        public void UpdatePsx(int hfloor, int hceil, string tfloor, string tceil, int effect, Dictionary<string, bool> flags, int tag, int brightness, int idxcolor, int idxcolorCeil) //[GEC]
         {
-            Update(hfloor, hceil, tfloor, tceil, effect, flags, new List<int> { tag }, brightness, 0, new Vector3D(), 0, new Vector3D(), idxcolor);//[GEC]
+            Update(hfloor, hceil, tfloor, tceil, effect, flags, new List<int> { tag }, brightness, 0, new Vector3D(), 0, new Vector3D(), idxcolor, idxcolorCeil);//[GEC]
         }
 
         //mxd. This updates all properties (UDMF version)
-        public void Update(int hfloor, int hceil, string tfloor, string tceil, int effect, Dictionary<string, bool> flags, List<int> tags, int brightness, float flooroffset, Vector3D floorslope, float ceiloffset, Vector3D ceilslope, int idxcolor)//[GEC]
+        public void Update(int hfloor, int hceil, string tfloor, string tceil, int effect, Dictionary<string, bool> flags, List<int> tags, int brightness, float flooroffset, Vector3D floorslope, float ceiloffset, Vector3D ceilslope, int idxcolor, int idxcolorCeil)//[GEC]
 		{
 			BeforePropsChange();
 			
@@ -845,7 +849,8 @@ namespace CodeImp.DoomBuilder.Map
 			this.tags = new List<int>(tags); //mxd
 			this.flags = new Dictionary<string, bool>(flags); //mxd
 			this.brightness = brightness;
-            this.idxcolor = idxcolor;
+            this.idxcolor = idxcolor; //[GEC]
+			this.idxcolorCeil = idxcolorCeil; //[GEC]
             this.flooroffset = flooroffset; //mxd
 			this.floorslope = floorslope; //mxd
 			this.ceiloffset = ceiloffset; //mxd

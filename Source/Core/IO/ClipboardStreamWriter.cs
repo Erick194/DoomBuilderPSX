@@ -205,6 +205,7 @@ namespace CodeImp.DoomBuilder.IO
 				writer.Write(s.CeilHeight);
 				writer.Write(s.Brightness);
                 writer.Write(s.IdxColor);//[GEC]
+				writer.Write(s.IdxColorCeil);//[GEC]
 
                 //mxd. Tags
                 writer.Write(s.Tags.Count);

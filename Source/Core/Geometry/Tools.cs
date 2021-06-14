@@ -606,6 +606,7 @@ namespace CodeImp.DoomBuilder.Geometry
 				newsector.CeilHeight = nearestsector.CeilHeight;
 				newsector.Brightness = nearestsector.Brightness;
                 newsector.IdxColor = nearestsector.IdxColor;//[GEC]
+				newsector.IdxColorCeil = nearestsector.IdxColorCeil;//[GEC]
             }
 			else
 			{
@@ -616,6 +617,7 @@ namespace CodeImp.DoomBuilder.Geometry
 				newsector.CeilHeight = General.Settings.DefaultCeilingHeight;
 				newsector.Brightness = General.Settings.DefaultBrightness;
                 newsector.IdxColor = 0;//[GEC]
+				newsector.IdxColorCeil = 0;//[GEC]
             }
 
 			//mxd. Apply overrides?

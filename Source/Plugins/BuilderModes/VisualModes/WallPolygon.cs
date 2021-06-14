@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using CodeImp.DoomBuilder.Geometry;
+using CodeImp.DoomBuilder.Map;
+using CodeImp.DoomBuilder.Rendering;
 
 #endregion
 
@@ -9,8 +11,7 @@ namespace CodeImp.DoomBuilder.BuilderModes
 {
 	internal class WallPolygon : List<Vector3D>
 	{
-		// The color that the wall should have
-		public int color;
+		public Lights.ShadingParams shadeParams; // [GEC]
 		
 		// Constructors
 		public WallPolygon() { }
@@ -19,7 +20,19 @@ namespace CodeImp.DoomBuilder.BuilderModes
 		// This copies all the wall properties
 		public void CopyProperties(WallPolygon target)
 		{
-			target.color = this.color;
+			target.shadeParams = this.shadeParams; // [GEC]
+		}
+
+		 // [GEC]
+		public void SetShadingParams(Sector sector, PixelColor baseColor)
+		{
+			Lights.ComputeShadingParams(sector, baseColor, out shadeParams);
+		}
+
+		// [GEC]
+		public PixelColor GetColorForZ(float z)
+		{
+			return Lights.GetColorForZ(z, shadeParams);
 		}
 	}
 }

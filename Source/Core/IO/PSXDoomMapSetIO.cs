@@ -222,10 +222,11 @@ namespace CodeImp.DoomBuilder.IO
                 string tfloor = Lump.MakeNormalName(reader.ReadBytes(8), WAD.ENCODING);
                 string tceil = Lump.MakeNormalName(reader.ReadBytes(8), WAD.ENCODING);
                 int bright = reader.ReadByte();
-                int idxcolor = reader.ReadByte();
+                int idxcolor = reader.ReadByte(); //[GEC]
                 int special = reader.ReadUInt16();
                 int tag = reader.ReadUInt16();
-                int flags = reader.ReadUInt16();
+                int flags = reader.ReadByte(); //[GEC]
+                int idxcolorCeil = reader.ReadByte(); //[GEC]
 
                 //mxd. Read flags
                 Dictionary<string, bool> stringflags = new Dictionary<string, bool>(StringComparer.Ordinal);
@@ -237,7 +238,7 @@ namespace CodeImp.DoomBuilder.IO
 
                 // Create new item
                 Sector s = map.CreateSector();
-                s.UpdatePsx(hfloor, hceil, tfloor, tceil, special, stringflags, tag, bright, idxcolor);
+                s.UpdatePsx(hfloor, hceil, tfloor, tceil, special, stringflags, tag, bright, idxcolor, idxcolorCeil);
 
                 // Add it to the lookup table
                 link.Add(i, s);
@@ -580,7 +581,8 @@ namespace CodeImp.DoomBuilder.IO
                     if (f.Value && int.TryParse(f.Key, out fnum)) flags |= fnum;
                 }
 
-                writer.Write((UInt16)flags);
+                writer.Write((Byte)flags);//[GEC]
+                writer.Write((Byte)s.IdxColorCeil);//[GEC]
             }
 
             // Find insert position and remove old lump

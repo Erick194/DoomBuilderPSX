@@ -426,7 +426,7 @@ namespace CodeImp.DoomBuilder.IO
 				Sector s = map.CreateSector();
 				if(s != null)
 				{
-					s.Update(hfloor, hceil, tfloor, tceil, special, stringflags, tags, bright, foffset, new Vector3D(fslopex, fslopey, fslopez).GetNormal(), coffset, new Vector3D(cslopex, cslopey, cslopez).GetNormal(), 0);//[GEC]
+					s.Update(hfloor, hceil, tfloor, tceil, special, stringflags, tags, bright, foffset, new Vector3D(fslopex, fslopey, fslopez).GetNormal(), coffset, new Vector3D(cslopex, cslopey, cslopez).GetNormal(), 0, 0);//[GEC]
 
 					// Custom fields
 					ReadCustomFields(c, s, "sector");

@@ -206,6 +206,24 @@ namespace CodeImp.DoomBuilder.Rendering
 			};
 		}
 
+		// [GEC] DC: Linear interpolation between two colors
+		public static PixelColor Lerp(PixelColor c1, PixelColor c2, float t)
+		{
+			float tinv = 1.0f - t;
+
+			float r = c1.r * tinv + c2.r * t + 0.5f;	// Note: +0.5 for rounding purposes
+			float g = c1.g * tinv + c2.g * t + 0.5f;
+			float b = c1.b * tinv + c2.b * t + 0.5f;
+			float a = c1.a * tinv + c2.a * t + 0.5f;
+
+			r = Math.Max(Math.Min(r, 255.0f), 0.0f);
+			g = Math.Max(Math.Min(g, 255.0f), 0.0f);
+			b = Math.Max(Math.Min(b, 255.0f), 0.0f);
+			a = Math.Max(Math.Min(a, 255.0f), 0.0f);
+
+			return new PixelColor((byte) a, (byte) r, (byte) g, (byte) b);
+		}
+
 		//mxd. Handy while debugging
 		public override string ToString()
 		{

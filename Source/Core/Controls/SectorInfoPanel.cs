@@ -343,25 +343,33 @@ namespace CodeImp.DoomBuilder.Controls
 				foreach(Label label in ceillabels) label.Visible = showExtededCeilingInfo;
 
                 labelIndexColor.Visible = false;//[GEC]
+                labelIndexColorCeil.Visible = false;//[GEC]
                 panelIndexColor.Visible = false;//[GEC]
+                panelIndexColorCeil.Visible = false;//[GEC]
                 ColorIndex.Enabled = false;//[GEC]
+                ColorIndexCeil.Enabled = false;//[GEC]
             }
             else if (General.Map.PSXDOOM)//[GEC]
             {
                 if (s.Fields != null)
                 {
-                    //sector colors
-                    labelIndexColor.Visible = true;
-                    panelIndexColor.Visible = true;
-                    ColorIndex.Visible = true;
+                    bool useDualColoredLighting = General.Map.Config.PSXDOOM_DCLIGHTS;
 
-                    Lights Col = new Lights();
-                    PixelColor rgb = Col.GetLights(0);
+                    //sector colors
+                    labelIndexColor.Visible = true; // [GEC]
+                    labelIndexColorCeil.Visible = useDualColoredLighting; // [GEC]
+                    panelIndexColor.Visible = true; // [GEC]
+                    panelIndexColorCeil.Visible = useDualColoredLighting; // [GEC]
+                    ColorIndex.Visible = true;  // [GEC]
+                    ColorIndexCeil.Visible = useDualColoredLighting;  // [GEC]
+
+                    PixelColor rgb = Lights.GetColor(0);
+                    PixelColor rgbCeil = Lights.GetColor(0);
 
                     if (s.IdxColor != 0)
                     {
                         ColorIndex.Text = s.IdxColor.ToString();
-                        rgb = Col.GetLights(s.IdxColor);
+                        rgb = Lights.GetColor(s.IdxColor);
                         panelIndexColor.BackColor = Color.FromArgb(rgb.r, rgb.g, rgb.b);
                         labelIndexColor.Enabled = true;
                         panelIndexColor.Enabled = true;
@@ -374,6 +382,24 @@ namespace CodeImp.DoomBuilder.Controls
                         panelIndexColor.Enabled = false;
                         ColorIndex.Enabled = false;
                         ColorIndex.Text = s.IdxColor.ToString();
+                    }
+
+                    if (s.IdxColorCeil != 0)
+                    {
+                        ColorIndexCeil.Text = s.IdxColorCeil.ToString();
+                        rgbCeil = Lights.GetColor(s.IdxColorCeil);
+                        panelIndexColorCeil.BackColor = Color.FromArgb(rgbCeil.r, rgbCeil.g, rgbCeil.b);
+                        labelIndexColorCeil.Enabled = true;
+                        panelIndexColorCeil.Enabled = true;
+                        ColorIndexCeil.Enabled = true;
+                    }
+                    else
+                    {
+                        panelIndexColorCeil.BackColor = SystemColors.Control;
+                        labelIndexColorCeil.Enabled = false;
+                        panelIndexColorCeil.Enabled = false;
+                        ColorIndexCeil.Enabled = false;
+                        ColorIndexCeil.Text = s.IdxColorCeil.ToString();
                     }
 
                     //Flags
