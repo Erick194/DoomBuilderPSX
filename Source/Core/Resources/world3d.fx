@@ -239,12 +239,11 @@ float getLightDiminishingMultiplier(float z)
 		intensity = 128.0;	// Things (no change)
 	}
 
-	// Clamp the intensity to the min/max allowed amounts (0.5x to 1.25x in normalized coords) and add a little
-	// bias to fix precision issues and flipping back and forth between values when the calculations are close:
-	intensity = trunc(clamp(intensity, 64.0, 160.0) + 0.0001);
+	// Clamp the intensity to the min/max allowed amounts (0.5x to 1.25x in normalized coords)
+	intensity = clamp(intensity, 64.0, 160.0);
 
-    // Scale the diminish intensity back to normalized color coords rather than 0-128
-    return intensity / 128.0;
+	// Scale the diminish intensity back to normalized color coords rather than 0-128
+	return intensity / 128.0;
 }
 
 //----------------------------------------------------------------------------------------------------------------------
