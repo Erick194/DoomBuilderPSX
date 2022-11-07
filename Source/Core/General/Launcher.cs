@@ -120,11 +120,19 @@ namespace CodeImp.DoomBuilder
 			string p_ap = "", p_apq = "";
 			string p_l1 = "", p_l2 = "";
 			string p_nm = "";
+			string p_dd = "";
 			string f = tempwad;
 			
 			// Make short path if needed
 			if(shortpaths) f = General.GetShortFilePath(f);
 			
+			// Get data directory
+			p_dd = Path.GetDirectoryName(General.Map.FilePathName);
+			if(shortpaths)
+			{
+				p_dd = General.GetShortFilePath(p_dd);
+			}
+
 			// Find the first IWAD file
 			if(General.Map.Data.FindFirstIWAD(out iwadloc))
 			{
@@ -214,6 +222,9 @@ namespace CodeImp.DoomBuilder
 			if(!General.Settings.TestMonsters) p_nm = "-nomonsters";
 			
 			// Make sure all our placeholders are in uppercase
+			outp = outp.Replace("%dd", "%DD");
+			outp = outp.Replace("%Dd", "%DD");
+			outp = outp.Replace("%dD", "%DD");
 			outp = outp.Replace("%f", "%F");
 			outp = outp.Replace("%wp", "%WP");
 			outp = outp.Replace("%wf", "%WF");
@@ -233,6 +244,7 @@ namespace CodeImp.DoomBuilder
 			outp = outp.Replace("%nm", "%NM");
 			
 			// Replace placeholders with actual values
+			outp = outp.Replace("%DD", p_dd);
 			outp = outp.Replace("%F", f);
 			outp = outp.Replace("%WP", p_wp);
 			outp = outp.Replace("%WF", p_wf);

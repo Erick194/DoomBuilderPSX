@@ -178,7 +178,8 @@
     <value>416, 17</value>
   </metadata>
   <data name="labelparameters.ToolTip" xml:space="preserve">
-    <value>%F     - WAD file with the map that is to be tested. NOTE: this is a temporary file and not the file you opened or saved. 
+    <value>%DD  - The data directory which contains all of the files to use for this mod. This is unique to PsyDoom and should be used.
+%F     - WAD file with the map that is to be tested. NOTE: this is a temporary file and not the file you opened or saved. 
 %WP - IWAD resource file with full path included. This is the first (highest) IWAD file that is found in the resources list. 
 %WF - IWAD resource filename only, without path. This is the first (highest) IWAD file that is found in the resources list. 
 %L     - Map lump name as is set in the map options window.
