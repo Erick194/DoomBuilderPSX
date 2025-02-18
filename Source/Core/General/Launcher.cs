@@ -125,12 +125,16 @@ namespace CodeImp.DoomBuilder
 			
 			// Make short path if needed
 			if(shortpaths) f = General.GetShortFilePath(f);
-			
-			// Get data directory
-			p_dd = Path.GetDirectoryName(General.Map.FilePathName);
-			if(shortpaths)
+
+			// [GEC] Ensure the map has a valid file path before proceeding
+			if (!string.IsNullOrEmpty(General.Map.FilePathName))
 			{
-				p_dd = General.GetShortFilePath(p_dd);
+				// Get data directory
+				p_dd = Path.GetDirectoryName(General.Map.FilePathName);
+				if (shortpaths)
+				{
+					p_dd = General.GetShortFilePath(p_dd);
+				}
 			}
 
 			// Find the first IWAD file
