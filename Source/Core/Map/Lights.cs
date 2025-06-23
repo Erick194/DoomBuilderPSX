@@ -195,6 +195,7 @@ namespace CodeImp.DoomBuilder.Map
 
             // Interpolate between the two colors based on z
             float t = (z - shadeParams.lowerColorZ) / zRange;
+            t = Math.Min(Math.Max(t, 0.0f), 1.0f);
             return PixelColor.Lerp(shadeParams.lowerColor, shadeParams.upperColor, t);
         }
     }
